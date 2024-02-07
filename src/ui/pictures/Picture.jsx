@@ -21,7 +21,7 @@ function Picture({ src, alt, caption }) {
                     <figure>
                         <img
                             src={`${src}`}
-                            alt={`${alt || caption} - ${caption}`}
+                            alt={`${alt || caption || ""} - ${caption || ""}`}
                         />
                         {caption && <figcaption>{caption}</figcaption>}
                     </figure>

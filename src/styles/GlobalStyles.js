@@ -275,10 +275,10 @@ textarea {
     outline: none;
 }
 
-textarea:focus {
+/* textarea:focus {
     outline: none;
     border: none;
-}
+} */
 
 input {
     border: none;
