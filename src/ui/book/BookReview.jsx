@@ -1,17 +1,12 @@
+import Video from "../videos/Video";
+
 function BookReview() {
     return (
         <>
             <div className="bookreview">
                 <div className="container">
                     <section>
-                        <div className="video">
-                            <video controls>
-                                <source
-                                    src="/vidoes/neurorons.mp4"
-                                    type="video/mp4"
-                                />
-                            </video>
-                        </div>
+                        <Video src="/vidoes/neurorons.mp4" />
 
                         <form action="#">
                             <h3>book appointment</h3>

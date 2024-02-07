@@ -5,7 +5,7 @@ function Footer() {
                 <div className="container">
                     <div className="credit">
                         created by
-                        <a href="#"> mr. mazen saad</a> all rights reserved
+                        <a> mr. mazen saad</a> all rights reserved
                     </div>
                 </div>
             </section>

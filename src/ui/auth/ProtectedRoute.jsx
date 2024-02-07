@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
 import styled from "styled-components";
@@ -5,6 +6,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../features/authentication/useUser";
 import Spinner from "../spinner/Spinner";
+import { App_Url } from "../../utils/constants";
 
 const FullPage = styled.div`
     height: 100vh;

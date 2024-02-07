@@ -1,43 +1,58 @@
+/* eslint-disable no-unused-vars */
 import { FaChevronRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { aboutus as aboutusVar } from "../../utils/vars";
+import Heading from "../global/Heading";
+import { useAboutUs } from "../../features/aboutus/useAboutUs";
+import Spinner from "../spinner/Spinner";
+import Video from "../videos/Video";
 
 function AboutViewCom() {
+    const { id, image, video, title, summary, description } = aboutusVar;
+
+    const { isLoading, aboutus } = useAboutUs();
+
+    if (isLoading) return <Spinner />;
     return (
         <>
             <div className="aboutviewcom">
                 <div className="container">
-                    <section>
-                        <div className="video">
-                            <video controls>
-                                <source
-                                    src="/vidoes/neurorons.mp4"
-                                    type="video/mp4"
-                                />
-                            </video>
-                        </div>
+                    {aboutus.map((about) => (
+                        <section key={about.id}>
+                            {about.video ? (
+                                <div className="video">
+                                    <Video
+                                        src={`${about.video || "/vidoes/neurorons.mp4" || video}`}
+                                    />
+                                </div>
+                            ) : (
+                                <div>
+                                    <img
+                                        src={`${about.image}`}
+                                        alt={`${about.title}-${about.id}`}
+                                    />
+                                </div>
+                            )}
 
-                        <div className="content">
-                            <h3>we take care of your healthy life</h3>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur,
-                                adipisicing elit. Iure ducimus, quod ex
-                                cupiditate ullam in assumenda maiores et culpa
-                                odit tempora ipsam qui, quisquam quis facere
-                                iste fuga, minus nesciunt.
-                            </p>
-                            <p>
-                                Lorem ipsum dolor, sit amet consectetur
-                                adipisicing elit. Natus vero ipsam laborum porro
-                                voluptates voluptatibus a nihil temporibus
-                                deserunt vel?
-                            </p>
+                            <div className="content">
+                                <Heading as="h3">{about.title}</Heading>
+                                <p>{about.summary}</p>
 
-                            <Link to="/book" className="btn">
-                                <span>book new</span>
-                                <FaChevronRight />
-                            </Link>
-                        </div>
-                    </section>
+                                <div className="list">
+                                    <ul>
+                                        {about.description.map((dis) => (
+                                            <li key={dis.id}>{dis.line}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <Link to="/book" className="btn">
+                                    <span>book new</span>
+                                    <FaChevronRight />
+                                </Link>
+                            </div>
+                        </section>
+                    ))}
                 </div>
             </div>
         </>

@@ -114,9 +114,14 @@ const GlobalStyles = createGlobalStyle`
         --light-color: #777;
         --white: #fff;
 
+        --color-grey-50: #f9fafb;
         // border
         --color-grey-100: #f3f4f6;
         --color-grey-300: #d1d5db;
+
+        --color-grey-500: #6b7280;
+        --color-grey-200: #e5e7eb;
+        
         
         // main
         --green: #16a085;
@@ -147,9 +152,14 @@ const GlobalStyles = createGlobalStyle`
         --light-color: #d1d5db;
         --white: #fff;
 
+        --color-grey-50: #111827;
+
         // border
         --color-grey-100: #1f2937;
         --color-grey-300: #4b5563;
+        
+        --color-grey-200: #374151;
+        --color-grey-500: #9ca3af;
 
         // main
         --green: #16a085;
@@ -173,6 +183,18 @@ const GlobalStyles = createGlobalStyle`
         // border
         --border: 0.2rem solid var(--green);
     }
+
+    // Indigo
+    --color-brand-50: #eef2ff;
+    --color-brand-100: #e0e7ff;
+    --color-brand-200: #c7d2fe;
+    --color-brand-500: #6366f1;
+    /* --color-brand-600: #4f46e5; */
+    --color-brand-600: #16a085ed;
+    /* --color-brand-700: #4338ca; */
+    --color-brand-700: #16a085;
+    --color-brand-800: #3730a3;
+    --color-brand-900: #312e81; 
 
     // 
     --border-radius-tiny: 3px;
@@ -265,6 +287,15 @@ input {
 
 input:focus {
     outline: none;
+}
+
+:disabled {
+    cursor: not-allowed;
+}
+
+select:disabled, input:disabled {
+    background-color: var(--color-grey-200);
+    color: var(--color-grey-500);
 }
 
 /* === end reyset === */

@@ -1,7 +1,7 @@
-import { FaChevronRight } from "react-icons/fa";
-// import { Link } from "react-router-dom";
-import Heading from "../global/Heading";
 import { useNavigate } from "react-router-dom";
+import { FaChevronRight } from "react-icons/fa";
+
+import Heading from "../global/Heading";
 import Button from "../global/Button";
 
 function Landing() {

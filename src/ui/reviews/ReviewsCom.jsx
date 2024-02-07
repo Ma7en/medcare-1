@@ -1,4 +1,10 @@
+/* eslint-disable no-unused-vars */
+import { useState } from "react";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import StarRating from "../Rating/StarRating";
+import Star from "../Rating/Star";
+import { reviews } from "../../utils/vars";
+import ReviewCom from "./ReviewCom";
 
 /* eslint-disable react/no-unescaped-entities */
 function ReviewsCom() {
@@ -16,6 +22,11 @@ function ReviewsCom() {
                     </h1>
 
                     <div className="box-container">
+                        {reviews.map((review) => (
+                            <ReviewCom review={review} key={review.id} />
+                        ))}
+
+                        {/* 
                         <div className="box">
                             <img src="images/review/pic-1.png" alt="review1" />
                             <h3>john deo</h3>
@@ -25,11 +36,6 @@ function ReviewsCom() {
                                 <FaStar />
                                 <FaStar />
                                 <FaStarHalfAlt />
-                                {/* <i className="fas fa-star" />
-                                <i className="fas fa-star" />
-                                <i className="fas fa-star" />
-                                <i className="fas fa-star" />
-                                <i className="fas fa-star-half-alt" /> */}
                             </div>
 
                             <p className="text">
@@ -80,7 +86,8 @@ function ReviewsCom() {
                                 alias sapiente minus voluptatem, reiciendis
                                 consequuntur optio dolorem!
                             </p>
-                        </div>
+                        </div> 
+                        */}
                     </div>
                 </div>
             </section>

@@ -34,6 +34,7 @@ function ServicesCom() {
                         {services.map((service) => (
                             <ServiceCom service={service} key={service.id} />
                         ))}
+
                         {/* <div className="box">
                             <FaNotesMedical />
                             <h3>free checkups</h3>

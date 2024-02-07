@@ -9,12 +9,14 @@ const StyledLogo = styled(Link)`
         user-select: none;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 0.4rem;
         font-size: 2.5rem;
         color: var(--black);
+        transition: var(--main-transition);
         svg {
             color: var(--green);
+            transition: var(--main-transition);
         }
     }
     /* &:hover,

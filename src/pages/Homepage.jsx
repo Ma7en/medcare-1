@@ -1,9 +1,5 @@
-/* eslint-disable no-unused-vars */
-import { Link, useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-import PageNav from "../ui/header/PageNav";
-import Main from "../ui/global/Main";
-import Button from "../ui/global/Button";
 import Header from "../ui/header/Header";
 import Landing from "../ui/landing/Landing";
 import IconsCom from "../ui/icons/IconsCom";
@@ -17,7 +13,7 @@ import LinksCom from "../ui/links/LinksCom";
 import Footer from "../ui/footer/Footer";
 
 export default function Homepage() {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     return (
         <>

@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+
 import {
     FaAmbulance,
     FaChevronRight,
@@ -14,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 function ServiceCom({ service }) {
     const navigate = useNavigate();
-    const { id: serviceId, icon, title, description } = service;
+    const { id: serviceId, icon, title, summary } = service;
     // console.log(icon, image);
 
     return (
@@ -28,7 +29,7 @@ function ServiceCom({ service }) {
                 {icon === "FaHeartbeat" && <FaHeartbeat />}
 
                 <Heading as="h5">{title}</Heading>
-                <p>{description}</p>
+                <p>{summary}</p>
                 <Button onClick={() => navigate(`/services/${serviceId}`)}>
                     <span>learn more</span>
                     <FaChevronRight />

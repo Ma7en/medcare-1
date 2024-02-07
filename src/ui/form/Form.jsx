@@ -36,6 +36,10 @@ const Form = styled.form`
     overflow: hidden;
     font-size: 1.4rem;
 
+    background-color: var(--back-box);
+    border: var(--border);
+    border-radius: var(--border-radius-md);
+
     > div:not(:last-child) {
         border-bottom: 1px solid var(--color-grey-100);
     }

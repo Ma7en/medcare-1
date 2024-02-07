@@ -11,7 +11,7 @@ import { doctors } from "../../utils/vars";
 import DoctorCom from "./DoctorCom";
 
 function DoctorsCom() {
-    console.log(doctors);
+    // console.log(doctors);
     return (
         <>
             <section className="doctors" id="doctors">

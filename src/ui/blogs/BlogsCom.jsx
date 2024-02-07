@@ -1,4 +1,7 @@
-import { FaCalendar, FaChevronRight, FaUser } from "react-icons/fa";
+// import { FaCalendar, FaChevronRight, FaUser } from "react-icons/fa";
+
+import { blogs } from "../../utils/vars";
+import BlogCom from "./BlogCom";
 
 function BlogsCom() {
     return (
@@ -11,6 +14,11 @@ function BlogsCom() {
                     </h1>
 
                     <div className="box-container">
+                        {blogs.map((blog) => (
+                            <BlogCom blog={blog} key={blog.id} />
+                        ))}
+
+                        {/* 
                         <div className="box">
                             <div className="image">
                                 <img
@@ -41,7 +49,7 @@ function BlogsCom() {
                                 </a>
                             </div>
                         </div>
-                        {/* 2 */}
+                        
                         <div className="box">
                             <div className="image">
                                 <img
@@ -71,7 +79,7 @@ function BlogsCom() {
                                 </a>
                             </div>
                         </div>
-                        {/* 3 */}
+                        
                         <div className="box">
                             <div className="image">
                                 <img
@@ -100,7 +108,8 @@ function BlogsCom() {
                                     <FaChevronRight />
                                 </a>
                             </div>
-                        </div>
+                        </div> 
+                        */}
                     </div>
                 </div>
             </section>

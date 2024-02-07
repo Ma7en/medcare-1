@@ -1,8 +1,11 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import styled from "styled-components";
 import quotes from "quotesy";
 import { useUser } from "../../features/authentication/useUser";
-import Row from "../Row";
+import Row from "../global/Row";
+// import { useUser } from "../../features/authentication/useUser";
+// import Row from "../Row";
 
 const StyledUserAvatar = styled.div`
     display: flex;
@@ -64,7 +67,7 @@ const Cite = styled.cite`
     font-size: 1.6rem;
 `;
 
-function UserHome() {
+function AppUserHome() {
     const { user } = useUser();
     // console.log(`user:- `, user);
     const { fullName, avatar } = user.user_metadata;
@@ -77,7 +80,8 @@ function UserHome() {
             <StyledUserAvatar>
                 <Row>
                     <Avatar
-                        src={avatar || "images/user/default-user.jpg"}
+                        // src={avatar || `images/user/default-user.jpg`}
+                        src={avatar || "/images/user/default-user.jpg"}
                         alt={`Avatar of ${fullName}`}
                     />
                     <Name>{fullName}</Name>
@@ -94,4 +98,4 @@ function UserHome() {
     );
 }
 
-export default UserHome;
+export default AppUserHome;
