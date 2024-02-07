@@ -9,7 +9,7 @@ import Spinner from "../../ui/spinner/Spinner";
 function AppAboutUs() {
     const { isLoading, aboutus } = useAboutUs();
 
-    console.log(`a`, aboutus);
+    // console.log(`a`, aboutus);
 
     if (isLoading) return <Spinner />;
     return (
@@ -25,6 +25,8 @@ function AppAboutUs() {
                 {/* <BlogTable /> */}
                 {/* <AddBlog /> */}
             </Row>
+
+            <Row></Row>
         </>
     );
 }

@@ -1,16 +1,20 @@
 /* eslint-disable no-unused-vars */
 import { FaChevronRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { aboutus as aboutusVar } from "../../utils/vars";
+
 import Heading from "../global/Heading";
-import { useAboutUs } from "../../features/aboutus/useAboutUs";
 import Spinner from "../spinner/Spinner";
 import Video from "../videos/Video";
+import Picture from "../pictures/Picture";
+
+import { aboutus as aboutusVar } from "../../utils/vars";
+import { useAboutUs } from "../../features/aboutus/useAboutUs";
 
 function AboutViewCom() {
     const { id, image, video, title, summary, description } = aboutusVar;
-
     const { isLoading, aboutus } = useAboutUs();
+
+    // console.log(`img==>`, image);
 
     if (isLoading) return <Spinner />;
     return (
@@ -20,29 +24,45 @@ function AboutViewCom() {
                     {aboutus.map((about) => (
                         <section key={about.id}>
                             {about.video ? (
-                                <div className="video">
-                                    <Video
-                                        src={`${about.video || "/vidoes/neurorons.mp4" || video}`}
-                                    />
-                                </div>
+                                <Video
+                                    src={`${about.video.src || "/vidoes/neurorons.mp4" || video}`}
+                                />
                             ) : (
-                                <div>
-                                    <img
-                                        src={`${about.image}`}
-                                        alt={`${about.title}-${about.id}`}
-                                    />
-                                </div>
+                                <Picture
+                                    src={
+                                        about.image.src ||
+                                        "images/about/about-img.svg"
+                                    }
+                                    alt={about.image.alt}
+                                    caption={about.image.caption}
+                                />
                             )}
 
                             <div className="content">
                                 <Heading as="h3">{about.title}</Heading>
+
                                 <p>{about.summary}</p>
 
                                 <div className="list">
                                     <ul>
-                                        {about.description.map((dis) => (
+                                        {/* {about.description.map((dis) => (
                                             <li key={dis.id}>{dis.line}</li>
-                                        ))}
+                                        ))} */}
+                                        {Object.keys(about.description).map(
+                                            (des) => (
+                                                <li key={des}>
+                                                    {about.description[des]}
+                                                </li>
+                                            ),
+                                        )}
+                                        {/* {Object.keys(description).forEach(
+                                            (des) => {
+                                                // setValue(`description.${des}`, description[des])
+                                                <li key={des}>
+                                                    {description[des]}dddd
+                                                </li>;
+                                            },
+                                        )} */}
                                     </ul>
                                 </div>
 

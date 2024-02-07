@@ -1,40 +1,45 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import Form from "../../ui/form/Form";
 import FormRow from "../../ui/form/FormRow";
+import FormRowVertical from "../../ui/form/FormRowVertical";
+import DevSrc from "../../ui/form/DevSrc";
 import Input from "../../ui/form/Input";
 import Textarea from "../../ui/form/Textarea";
 import FileInput from "../../ui/form/FileInput";
 import Button from "../../ui/global/Button";
 
 import { useUpdateAboutUs } from "./useUpdateAboutUs";
-import FormRowVertical from "../../ui/form/FormRowVertical";
-import { useEffect } from "react";
-import DevSrc from "../../ui/form/DevSrc";
-import Spinner from "../../ui/spinner/Spinner";
+import { useUser } from "../authentication/useUser";
+// import Spinner from "../../ui/spinner/Spinner";
 // import { useAboutUs } from "./useAboutUs";
 
 function UpdateAboutUsForm({ about }) {
+    const { user } = useUser();
+    const { id: userId, email: userEmail } = user;
+
     const {
         id: updateId,
-        created_at,
         dataupdate,
         title,
         summary,
         description,
         image,
         video,
-        email,
-        user_id,
     } = about;
     const { isUpdating, updateAboutUs } = useUpdateAboutUs();
 
     const { register, handleSubmit, reset, getValues, formState, setValue } =
-        useForm({});
+        useForm({
+            defaultValues: about,
+        });
     const { errors } = formState;
+
+    // console.log(`ig`, image);
 
     useEffect(() => {
         const updateAboutData = async () => {
@@ -45,33 +50,60 @@ function UpdateAboutUsForm({ about }) {
 
                 const descriptionData = async () => {
                     try {
-                        description.map((des) =>
-                            setValue(`description${des.id}`, `${des.line}`),
-                        );
+                        Object.keys(description).forEach((des) => {
+                            setValue(`description.${des}`, description[des]);
+                        });
                     } catch (error) {
                         console.log(error);
                     }
                 };
                 descriptionData();
+
+                const imageData = async () => {
+                    try {
+                        setValue("image", {
+                            alt: `${image.alt}`,
+                            caption: `${image.caption}`,
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    }
+                };
+                imageData();
             } catch (error) {
                 console.error(error);
             }
         };
         updateAboutData();
-    }, [dataupdate, description, setValue, summary, title]);
+    }, [
+        dataupdate,
+        description,
+        image.alt,
+        image.caption,
+        setValue,
+        summary,
+        title,
+    ]);
 
     function onSubmit(data) {
-        const image =
-            typeof data.image === "string" ? data.image : data.image[0];
+        console.log(`d===========`, data);
+
+        let imageSrc =
+            data.image && data.image.src ? data.image.src[0] : image.src;
+        // typeof data.image === "string" ? data?.image : data?.image?.src[0];
+
+        let ImageE = {
+            ...data.image,
+            src: imageSrc,
+        };
 
         updateAboutUs(
-            // eslint-disable-next-line no-undef
             {
                 newAboutUsData: {
                     ...data,
-                    image,
-                    email: email,
-                    user_id: user_id,
+                    image: { ...ImageE },
+                    email: userEmail,
+                    user_id: userId,
                 },
                 id: updateId,
             },
@@ -87,8 +119,6 @@ function UpdateAboutUsForm({ about }) {
     function onError(errors) {
         console.log(errors);
     }
-
-    // if (description) return <Spinner />;
 
     return (
         <Form onSubmit={handleSubmit(onSubmit, onError)} type={"updata"}>
@@ -108,7 +138,6 @@ function UpdateAboutUsForm({ about }) {
                 error={errors?.summary?.message}
             >
                 <Textarea
-                    // type="number"
                     id="summary"
                     defaultValue=""
                     disabled={isUpdating}
@@ -123,16 +152,14 @@ function UpdateAboutUsForm({ about }) {
                 error={errors?.description?.message}
             >
                 <>
-                    {description.map((des) => (
-                        // <p key={des.id}>ddd</p>
-
+                    {Object.keys(description).map((des) => (
                         <Input
-                            key={des.id}
+                            key={des}
                             type="text"
-                            id={`description${des.id}`}
+                            id={`description.${des}`}
                             disabled={isUpdating}
-                            {...register(`description${des.id}`, {
-                                required: "This field is required",
+                            {...register(`description.${des}`, {
+                                // required: "This field is required",
                             })}
                         />
                     ))}
@@ -146,12 +173,10 @@ function UpdateAboutUsForm({ about }) {
 
                         <FileInput
                             id="video"
-                            accept="image/*"
+                            accept="video/*"
                             // type="file"
                             {...register("video", {
-                                required: isUpdating
-                                    ? false
-                                    : "This field is required",
+                                required: "This field is required",
                             })}
                         />
                     </DevSrc>
@@ -160,14 +185,11 @@ function UpdateAboutUsForm({ about }) {
                         <label>Choose the Track video</label>
 
                         <FileInput
-                            id="video"
-                            accept="image/*"
+                            id="track"
+                            // accept="text/*,.srt,.vtt"
+                            accept=".txt,.srt,.vtt"
                             // type="file"
-                            {...register("video", {
-                                required: isUpdating
-                                    ? false
-                                    : "This field is required",
-                            })}
+                            {...register("track", {})}
                         />
                     </DevSrc>
                 </>
@@ -180,12 +202,11 @@ function UpdateAboutUsForm({ about }) {
 
                         <FileInput
                             id="image"
-                            accept="image/*"
-                            // type="file"
-                            {...register("image", {
-                                required: isUpdating
-                                    ? false
-                                    : "This field is required",
+                            accept="image/* "
+                            {...register("image.src", {
+                                // required: image.src
+                                //     ? false
+                                //     : "This field is required",
                             })}
                         />
                     </DevSrc>
@@ -195,16 +216,17 @@ function UpdateAboutUsForm({ about }) {
                         id="alt"
                         placeholder="Enter your description picture"
                         disabled={isUpdating}
-                        {...register("alt", {
+                        {...register("image.alt", {
                             required: "This field is required",
                         })}
                     />
+
                     <Input
                         type="text"
                         id="caption"
                         placeholder="Enter your Caption picture"
                         disabled={isUpdating}
-                        {...register("caption", {
+                        {...register("image.caption", {
                             required: "This field is required",
                         })}
                     />

@@ -11,6 +11,7 @@ function AboutCom() {
     const { isLoading, aboutus } = useAboutUs();
 
     // console.log(`a`, aboutus[0].image);
+    // console.log(`a===`, aboutus);
 
     if (isLoading) return <Spinner />;
     return (
@@ -25,10 +26,7 @@ function AboutCom() {
                     {aboutus.map((about) => (
                         <div className="row" key={about.id}>
                             <Picture
-                                src={
-                                    about.image.src ||
-                                    "images/about/about-img.svg"
-                                }
+                                src={"images/about/about-img.svg"}
                                 alt={about.image.alt}
                                 caption={about.image.caption}
                             />

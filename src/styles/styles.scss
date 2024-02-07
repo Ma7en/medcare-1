@@ -1159,6 +1159,28 @@ img {
                         display: flex;
                         flex-direction: column;
                         gap: 1rem;
+                        padding-left: 4rem;
+                        li {
+                            counter-increment: counter;
+                            position: relative;
+                            &::before {
+                                content: counter(counter);
+                                position: absolute;
+                                width: 2.5rem;
+                                height: 2.5rem;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                // padding: 1rem;
+                                text-align: center;
+                                // background-color: red;
+                                background-color: var(--back-sec-1);
+                                border-radius: 50%;
+                                left: -4rem;
+                                border: var(--border);
+                                box-shadow: var(--box-shadow);
+                            }
+                        }
                     }
                 }
             }

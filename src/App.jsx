@@ -163,13 +163,13 @@ function App() {
                             <Route path="/blogs" element={<Blogs />} />
                             <Route path="/blogs/:blogId" element={<Blog />} />
 
+                            <Route path="/aboutus" element={<AboutUs />} />
+
                             <Route path="/admins" element={<Admins />} />
                             <Route
                                 path="/admins/:adminId"
                                 element={<Admin />}
                             />
-
-                            <Route path="/aboutus" element={<AboutUs />} />
 
                             <Route path="login" element={<Login />} />
                             <Route path="signup" element={<Signup />} />
