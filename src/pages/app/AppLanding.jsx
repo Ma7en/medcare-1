@@ -12,11 +12,7 @@ function AppLanding() {
                 <BlogTableOperations />
             </Row>
 
-            <Row>
-                {/* <BlogTable /> */}
-
-                {/* <AddBlog /> */}
-            </Row>
+            <Row></Row>
         </>
     );
 }

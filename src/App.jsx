@@ -42,6 +42,7 @@ import AppIconsNumber from "./pages/app/AppIconsNumber";
 import AppAboutUs from "./pages/app/AppAboutUs";
 import AppDoctors from "./pages/app/AppDoctors";
 import AppReviews from "./pages/app/AppReviews";
+import AppLanding from "./pages/app/AppLanding";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -104,7 +105,7 @@ function App() {
                                 />
                                 <Route
                                     path={`${App_Url}/landing`}
-                                    element={<AppBlogs />}
+                                    element={<AppLanding />}
                                 />
                                 <Route
                                     path={`${App_Url}/iconsnumber`}

@@ -40,6 +40,8 @@ function UpdateAboutUsForm({ about }) {
     } = about;
     const { isUpdating, updateAboutUs } = useUpdateAboutUs();
 
+    console.log(`a------`, about);
+
     const { register, handleSubmit, reset, getValues, formState, setValue } =
         useForm({
             defaultValues: about,
@@ -69,8 +71,8 @@ function UpdateAboutUsForm({ about }) {
                 const videoData = async () => {
                     try {
                         setValue("video", {
-                            src: `${video.src}`,
-                            track: `${video.track}`,
+                            // src: `${video.src}`,
+                            // track: `${video.track}`,
                             url: `${video.url}`,
                         });
                     } catch (error) {
@@ -107,6 +109,7 @@ function UpdateAboutUsForm({ about }) {
         title,
         video.src,
         video.track,
+        video.url,
     ]);
 
     function onSubmit(data) {
