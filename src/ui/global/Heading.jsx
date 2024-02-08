@@ -66,5 +66,13 @@ const Heading = styled.h1`
             color: var(--black);
             font-size: 2.5rem;
         `} /* line-height: 1.4; */
+
+    ${(props) =>
+        props.as === "h6" &&
+        css`
+            /* padding: 1rem 0; */
+            color: var(--black);
+            font-size: 2rem;
+        `} /* line-height: 1.4; */
 `;
 export default Heading;

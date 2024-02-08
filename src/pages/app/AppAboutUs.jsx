@@ -22,8 +22,6 @@ function AppAboutUs() {
                 {aboutus.map((about) => (
                     <UpdateAboutUsForm key={about.id} about={about} />
                 ))}
-                {/* <BlogTable /> */}
-                {/* <AddBlog /> */}
             </Row>
 
             <Row></Row>

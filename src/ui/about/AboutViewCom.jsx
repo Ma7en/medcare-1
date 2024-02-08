@@ -25,7 +25,8 @@ function AboutViewCom() {
                         <section key={about.id}>
                             {about.video ? (
                                 <Video
-                                    src={`${about.video.src || "/vidoes/neurorons.mp4" || video}`}
+                                    // src={`${about.video.src || "/vidoes/neurorons.mp4" || video}`}
+                                    src={`${"/vidoes/neurorons.mp4" || video}`}
                                 />
                             ) : (
                                 <Picture
