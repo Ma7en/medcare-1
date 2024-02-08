@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
+import Label from "./Label";
 
 const StyledFormRow = styled.div`
     /* display: flex;
@@ -15,9 +16,11 @@ const StyledFormRow = styled.div`
     padding: 1.2rem 0;
 `;
 
-const Label = styled.label`
-    font-weight: 500;
-`;
+// const Label = styled.label`
+//     font-weight: 500;
+//     /* font-size: 1.6rem; */
+//     /* color: var(--green); */
+// `;
 
 const Error = styled.span`
     font-size: 1.4rem;
@@ -47,7 +50,11 @@ function FormRowVertical({ label, error, children }) {
     return (
         <>
             <StyledFormRow>
-                {label && <Label htmlFor={children.props.id}>{label}</Label>}
+                {label && (
+                    <Label type="1" htmlFor={children.props.id}>
+                        {label}
+                    </Label>
+                )}
                 {/* <Div>{children}</Div> */}
                 {children}
                 {error && <Error>{error}</Error>}

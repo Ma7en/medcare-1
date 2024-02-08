@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import styled, { css } from "styled-components";
+import Label from "./Label";
 
 const StyledFormRow = styled.div`
     /* display: flex;
@@ -37,9 +38,13 @@ const StyledFormRow = styled.div`
     padding: 1.2rem 0;
 `;
 
-const Label = styled.label`
-    font-weight: 500;
-`;
+// const Label = styled.label`
+//     font-weight: 500;
+//     /* font-size: 1.6rem;
+//     color: var(--green); */
+//     /* font-size: 2rem;
+//     color: var(--green); */
+// `;
 
 const Error = styled.span`
     font-size: 1.4rem;
@@ -73,7 +78,9 @@ function FormRowPass({ sign, label, error, children }) {
             <>
                 <StyledFormRow sign={sign}>
                     {label && (
-                        <Label htmlFor={children.props.id}>{label}</Label>
+                        <Label type="1" htmlFor={children.props.id}>
+                            {label}
+                        </Label>
                     )}
                     <Div>{children}</Div>
                     {error && <Error>{error}</Error>}

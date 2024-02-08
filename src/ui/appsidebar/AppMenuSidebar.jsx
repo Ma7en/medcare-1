@@ -11,9 +11,11 @@ const StyledMenuFaBars = styled(FaBars)`
     color: var(--green);
     cursor: pointer;
     display: none;
-    z-index: 5;
+    z-index: 10;
     position: absolute;
-    right: -5rem;
+    /* right: -5rem; */
+    left: 2rem;
+
     top: 1.6rem;
     transition: var(--main-transition);
     -webkit-transition: var(--main-transition);
@@ -24,6 +26,21 @@ const StyledMenuFaBars = styled(FaBars)`
         // display: initial;
         display: flex;
         transition: var(--main-transition);
+        &.bars {
+            animation-name: bars;
+            animation-duration: 0.5s;
+            left: 2rem;
+        }
+        @keyframes bars {
+            from {
+                /* background-color: red; */
+                left: 28rem;
+            }
+            to {
+                left: 2rem;
+                /* background-color: yellow; */
+            }
+        }
     }
 `;
 const StyledMenuFaTimes = styled(FaTimes)`
@@ -36,7 +53,8 @@ const StyledMenuFaTimes = styled(FaTimes)`
     display: none;
     z-index: 5;
     position: absolute;
-    right: -5rem;
+    /* right: -5rem; */
+    left: 2rem;
     top: 1.6rem;
     transition: var(--main-transition);
     -webkit-transition: var(--main-transition);
@@ -47,6 +65,21 @@ const StyledMenuFaTimes = styled(FaTimes)`
         // display: initial;
         display: flex;
         transition: var(--main-transition);
+        &.times {
+            animation-name: time;
+            animation-duration: 0.5s;
+            left: 28rem;
+        }
+        @keyframes time {
+            from {
+                /* background-color: red; */
+                left: 2rem;
+            }
+            to {
+                /* background-color: yellow; */
+                left: 28rem;
+            }
+        }
     }
 `;
 
@@ -63,7 +96,7 @@ function AppMenuSidebar() {
         <>
             {navMenu ? (
                 <StyledMenuFaTimes
-                    // className="fa-times"
+                    className="times"
                     // id="menu-btn"
                     onClick={() => {
                         setNavMenu(!navMenu);
@@ -72,6 +105,7 @@ function AppMenuSidebar() {
             ) : (
                 <StyledMenuFaBars
                     // id="menu-btn"
+                    className="bars"
                     onClick={() => {
                         setNavMenu(!navMenu);
                     }}

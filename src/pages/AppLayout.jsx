@@ -25,6 +25,8 @@ const StyledAppLayout = styled.div`
     grid-template-rows: auto 1fr;
     height: 100vh;
     position: relative;
+    /* scroll-behavior: smooth;
+    overflow-y: scroll; */
     @media (max-width: 767px) {
         grid-template-columns: 1fr;
     }

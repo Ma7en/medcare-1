@@ -122,28 +122,6 @@ function App() {
                                     path={`${App_Url}/reviews`}
                                     element={<AppReviews />}
                                 />
-                                {/* <Route
-                                    path={`${App_Url}/cities`}
-                                    element={<CityList />}
-                                />
-                                <Route
-                                    path={`${App_Url}/cities/:cityId`}
-                                    element={<City />}
-                                />
-                                <Route
-                                    path={`${App_Url}/cities/edit/:cityId`}
-                                    element={<EditCityForm />}
-                                /> */}
-
-                                {/* <Route
-                                    path={`${App_Url}/countries`}
-                                    element={<CountryList />}
-                                /> */}
-
-                                {/* <Route
-                                    path={`${App_Url}/form`}
-                                    element={<CreateCityForm />}
-                                /> */}
 
                                 <Route
                                     path={`${App_Url}/account`}

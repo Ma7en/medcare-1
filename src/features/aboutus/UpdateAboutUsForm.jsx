@@ -16,6 +16,7 @@ import Button from "../../ui/global/Button";
 import { useUpdateAboutUs } from "./useUpdateAboutUs";
 import { useUser } from "../authentication/useUser";
 import AboutCreated from "../../ui/about/AboutCreated";
+import Label from "../../ui/form/Label";
 
 // import Spinner from "../../ui/spinner/Spinner";
 // import { useAboutUs } from "./useAboutUs";
@@ -45,7 +46,7 @@ function UpdateAboutUsForm({ about }) {
         });
     const { errors } = formState;
 
-    console.log(`u--`, image);
+    // console.log(`u--`, image);
 
     useEffect(() => {
         const updateAboutData = async () => {
@@ -70,6 +71,7 @@ function UpdateAboutUsForm({ about }) {
                         setValue("video", {
                             src: `${video.src}`,
                             track: `${video.track}`,
+                            url: `${video.url}`,
                         });
                     } catch (error) {
                         console.log(error);
@@ -210,7 +212,9 @@ function UpdateAboutUsForm({ about }) {
                 >
                     <>
                         <DevSrc>
-                            <label htmlFor="video">Choose the video</label>
+                            <Label type="3" htmlFor="video">
+                                Choose the video
+                            </Label>
 
                             <FileInput
                                 id="video"
@@ -222,10 +226,27 @@ function UpdateAboutUsForm({ about }) {
                             />
                         </DevSrc>
 
+                        <span>Or</span>
+
                         <DevSrc>
-                            <label htmlFor="track">
+                            <Label type="3" htmlFor="urlvideo">
+                                Type the URL
+                            </Label>
+
+                            <Input
+                                type="text"
+                                id="urlvideo"
+                                disabled={isUpdating}
+                                {...register("video.url", {
+                                    // required: "This field is required",
+                                })}
+                            />
+                        </DevSrc>
+
+                        <DevSrc>
+                            <Label type="3" htmlFor="track">
                                 Choose the Track video
-                            </label>
+                            </Label>
 
                             <FileInput
                                 id="track"
@@ -246,7 +267,9 @@ function UpdateAboutUsForm({ about }) {
                 >
                     <>
                         <DevSrc>
-                            <label htmlFor="image">Choose the picture</label>
+                            <Label type="3" htmlFor="image">
+                                Choose the picture
+                            </Label>
 
                             <FileInput
                                 id="image"
@@ -260,7 +283,9 @@ function UpdateAboutUsForm({ about }) {
                         </DevSrc>
                         <span>Or</span>
                         <DevSrc>
-                            <label htmlFor="url">Type the URL</label>
+                            <Label type="3" htmlFor="url">
+                                Type the URL
+                            </Label>
 
                             <Input
                                 type="text"
@@ -273,9 +298,9 @@ function UpdateAboutUsForm({ about }) {
                         </DevSrc>
 
                         <DevSrc>
-                            <label htmlFor="alt">
+                            <Label type="3" htmlFor="alt">
                                 Enter your description picture
-                            </label>
+                            </Label>
                             <Input
                                 type="text"
                                 id="alt"
@@ -288,9 +313,10 @@ function UpdateAboutUsForm({ about }) {
                         </DevSrc>
 
                         <DevSrc>
-                            <label htmlFor="caption">
+                            <Label type="3" htmlFor="caption">
                                 Enter your Caption picture
-                            </label>
+                            </Label>
+
                             <Input
                                 type="text"
                                 id="caption"

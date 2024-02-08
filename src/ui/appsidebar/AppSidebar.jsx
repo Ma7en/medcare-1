@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import styled from "styled-components";
 import AppMainNav from "./AppMainNav";
 import Logo from "../header/Logo";
@@ -16,7 +17,7 @@ const StyledSidebar = styled.aside`
     transition: var(--main-transition);
 
     scroll-behavior: smooth;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
     &::-webkit-scrollbar {
         width: 0;
     }
@@ -53,7 +54,7 @@ function AppSidebar() {
     return (
         <>
             <StyledSidebar className={`${navMenu && "open"}`}>
-                <AppMenuSidebar />
+                {/* <AppMenuSidebar /> */}
 
                 <Logo />
                 <AppMainNav />
