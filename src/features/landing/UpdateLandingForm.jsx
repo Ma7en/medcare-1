@@ -1,28 +1,25 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
-import AboutCreated from "../../ui/about/AboutCreated";
+import { useUser } from "../authentication/useUser";
+import { useUpdateLanding } from "./useUpdateLanding";
+
+import Spinner from "../../ui/spinner/Spinner";
+import LandingCreated from "../../ui/landing/LandingCreated";
 import Form from "../../ui/form/Form";
-import FormRow from "../../ui/form/FormRow";
 import FormRowVertical from "../../ui/form/FormRowVertical";
 import DevSrc from "../../ui/form/DevSrc";
 import Input from "../../ui/form/Input";
 import Textarea from "../../ui/form/Textarea";
-import FileInput from "../../ui/form/FileInput";
-import Button from "../../ui/global/Button";
 import Label from "../../ui/form/Label";
-import Spinner from "../../ui/spinner/Spinner";
-
-import { useUpdateAboutUs } from "./useUpdateAboutUs";
-import { useUser } from "../authentication/useUser";
+import FileInput from "../../ui/form/FileInput";
+import FormRow from "../../ui/form/FormRow";
+import Button from "../../ui/global/Button";
 import Or from "../../ui/form/Or";
 
-// import { useAboutUs } from "./useAboutUs";
-
-function UpdateAboutUsForm({ about }) {
+function UpdateLandingForm({ landing }) {
     const { user } = useUser();
     const { id: userId, email: userEmail } = user;
 
@@ -31,17 +28,16 @@ function UpdateAboutUsForm({ about }) {
         dataupdate,
         title,
         summary,
-        description,
         image,
         video,
         email,
         user_id,
-    } = about;
-    const { isUpdating, updateAboutUs } = useUpdateAboutUs();
+    } = landing;
+    const { isUpdating, updateAboutUs } = useUpdateLanding();
 
     const { register, handleSubmit, reset, getValues, formState, setValue } =
         useForm({
-            defaultValues: about,
+            defaultValues: landing,
         });
     const { errors } = formState;
 
@@ -52,22 +48,9 @@ function UpdateAboutUsForm({ about }) {
                 setValue("summary", summary || "");
                 setValue("dataupdate", new Date().toISOString() || dataupdate);
 
-                const descriptionData = async () => {
-                    try {
-                        Object.keys(description).forEach((des) => {
-                            setValue(`description.${des}`, description[des]);
-                        });
-                    } catch (error) {
-                        console.log(error);
-                    }
-                };
-                descriptionData();
-
                 const videoData = async () => {
                     try {
                         setValue("video", {
-                            // src: `${video.src}`,
-                            // track: `${video.track}`,
                             url: `${video.url}`,
                         });
                     } catch (error) {
@@ -95,7 +78,6 @@ function UpdateAboutUsForm({ about }) {
         updateAboutData();
     }, [
         dataupdate,
-        description,
         image.alt,
         image.caption,
         image.url,
@@ -156,11 +138,11 @@ function UpdateAboutUsForm({ about }) {
 
     return (
         <>
-            <AboutCreated dataupdate={dataupdate} />
+            <LandingCreated dataupdate={dataupdate} />
 
             <Form onSubmit={handleSubmit(onSubmit, onError)} type={"updata"}>
                 <FormRowVertical
-                    label="About title"
+                    label="Landing title"
                     error={errors?.title?.message}
                 >
                     <Input
@@ -174,7 +156,7 @@ function UpdateAboutUsForm({ about }) {
                 </FormRowVertical>
 
                 <FormRowVertical
-                    label="summary for About"
+                    label="summary for Landing"
                     error={errors?.summary?.message}
                 >
                     <Textarea
@@ -188,26 +170,7 @@ function UpdateAboutUsForm({ about }) {
                 </FormRowVertical>
 
                 <FormRowVertical
-                    label="Description for About"
-                    error={errors?.description?.message}
-                >
-                    <>
-                        {Object.keys(description).map((des) => (
-                            <Input
-                                key={des}
-                                type="text"
-                                id={`description.${des}`}
-                                disabled={isUpdating}
-                                {...register(`description.${des}`, {
-                                    // required: "This field is required",
-                                })}
-                            />
-                        ))}
-                    </>
-                </FormRowVertical>
-
-                <FormRowVertical
-                    label="About video"
+                    label="Landing video"
                     error={errors?.video?.message}
                 >
                     <>
@@ -262,7 +225,7 @@ function UpdateAboutUsForm({ about }) {
                 </FormRowVertical>
 
                 <FormRowVertical
-                    label="About photo"
+                    label="Landing photo"
                     error={errors?.image?.message}
                 >
                     <>
@@ -281,7 +244,9 @@ function UpdateAboutUsForm({ about }) {
                                 })}
                             />
                         </DevSrc>
+
                         <Or />
+
                         <DevSrc>
                             <Label type="3" htmlFor="url">
                                 Type the URL
@@ -345,4 +310,4 @@ function UpdateAboutUsForm({ about }) {
     );
 }
 
-export default UpdateAboutUsForm;
+export default UpdateLandingForm;

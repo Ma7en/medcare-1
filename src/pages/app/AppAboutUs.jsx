@@ -24,7 +24,7 @@ function AppAboutUs() {
                 ))}
             </Row>
 
-            <Row></Row>
+            {/* <Row></Row> */}
         </>
     );
 }

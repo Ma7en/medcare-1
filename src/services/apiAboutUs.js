@@ -109,8 +109,8 @@ export async function updateAboutUs(obj, id) {
         // if (hasImagePath || hasVideoPath || hasTrackPath) {
         //     return data;
         // }
-
         // const uploadPromises = [];
+
         if (!hasImagePath) {
             await supabase.storage
                 .from("images/aboutus")
@@ -127,64 +127,8 @@ export async function updateAboutUs(obj, id) {
                 .upload(trackName, obj.video.track);
         }
 
-        // await Promise.all(uploadPromises);
-
-        // const { error: storageError } = await supabase.storage
-        //     .from("images/aboutus")
-        //     .upload(imageName, obj.image.src);
-        // // ==================
-
-        // // 3) Delete the cabin if there was an error uploading image
-        // if (storageError) {
-        //     await supabase.from("aboutus").delete().eq("id", data.id);
-        //     console.error(storageError);
-        //     throw new Error(
-        //         "AboutUs image could not be uploaded and the aboutus was not Updated",
-        //     );
-        // }
-
-        // // ==================
-
-        // // 2)= upload video
-        // if (hasVideoPath) return data;
-        // const { error: storageErrorVideo } = await supabase.storage
-        //     .from("images/aboutus")
-        //     .upload(videoName, obj.video.src);
-        // // ==================
-
-        // // 3) Delete the cabin if there was an error uploading image
-        // if (storageErrorVideo) {
-        //     await supabase.from("aboutus").delete().eq("id", data.id);
-        //     console.error(storageErrorVideo);
-        //     throw new Error(
-        //         "AboutUs video could not be uploaded and the aboutus was not Updated",
-        //     );
-        // }
-
-        // // ==================
-
-        // // 2)= upload Track
-        // if (hasTrackPath) return data;
-        // const { error: storageErrorTrack } = await supabase.storage
-        //     .from("images/aboutus")
-        //     .upload(trackName, obj.video.track);
-
-        // // ==================
-
-        // // 3) Delete the cabin if there was an error uploading image
-        // if (storageErrorTrack) {
-        //     await supabase.from("aboutus").delete().eq("id", data.id);
-        //     console.error(storageErrorTrack);
-        //     throw new Error(
-        //         "AboutUs Track could not be uploaded and the aboutus was not Updated",
-        //     );
-        // }
-
         return data;
     } catch (error) {
-        // if (id) {
-        //     await supabase.from("aboutus").delete().eq("id", id);
-        // }
         console.error(error);
         throw new Error("AboutUs could not be updated or uploaded");
     }

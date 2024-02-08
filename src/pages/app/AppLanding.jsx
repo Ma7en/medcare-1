@@ -1,18 +1,25 @@
-/* eslint-disable no-unused-vars */
+import { useLanding } from "../../features/landing/useLanding";
 
-import BlogTableOperations from "../../features/blogs/BlogTableOperations";
+import Spinner from "../../ui/spinner/Spinner";
 import Heading from "../../ui/global/Heading";
 import Row from "../../ui/global/Row";
+import UpdateLandingForm from "../../features/landing/UpdateLandingForm";
 
 function AppLanding() {
+    const { isLoading, landing } = useLanding();
+
+    if (isLoading) return <Spinner />;
     return (
         <>
             <Row type="horizontal">
                 <Heading as="h1">All Landing</Heading>
-                <BlogTableOperations />
             </Row>
 
-            <Row></Row>
+            <Row>
+                {landing.map((landing) => (
+                    <UpdateLandingForm key={landing.id} landing={landing} />
+                ))}
+            </Row>
         </>
     );
 }
