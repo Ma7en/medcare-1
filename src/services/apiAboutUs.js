@@ -50,7 +50,8 @@ export async function updateAboutUs(obj, id) {
     // https://pcyqsotaevsfhfargbfl.supabase.co/storage/v1/object/public/images/aboutus/recording.mp4
     console.log(`obj`, obj);
     try {
-        //1)=== image
+        //1)=============================
+        //1) image
         const hasImagePath = obj.image?.src?.startsWith?.(supabaseUrl);
         const imageName = `${Date.now()}-${obj.image?.src?.name}`.replaceAll(
             "/",
@@ -60,7 +61,7 @@ export async function updateAboutUs(obj, id) {
             ? obj.image.src
             : `${supabaseUrl}/storage/v1/object/public/images/aboutus/${imageName}`;
 
-        //2)=== videoSrc
+        //2) videoSrc
         const hasVideoPath = obj.video?.src?.startsWith?.(supabaseUrl);
         const videoName = `${Date.now()}-${obj.video?.src?.name}`.replaceAll(
             "/",
@@ -70,7 +71,7 @@ export async function updateAboutUs(obj, id) {
             ? obj.video.src
             : `${supabaseUrl}/storage/v1/object/public/images/aboutus/${videoName}`;
 
-        //3)=== videoTrack
+        //3) videoTrack
         const hasTrackPath = obj.video?.track?.startsWith?.(supabaseUrl);
         const trackName = `${Date.now()}-${obj.video?.track?.name}`.replaceAll(
             "/",
@@ -80,9 +81,8 @@ export async function updateAboutUs(obj, id) {
             ? obj.video.track
             : `${supabaseUrl}/storage/v1/object/public/images/aboutus/${trackName}`;
 
-        // ==================
-
-        // 1)== create/edit cabin
+        //2)=============================
+        // 1) create/edit aboutus
         let query = supabase.from("aboutus");
 
         // B) EDIT
@@ -103,13 +103,8 @@ export async function updateAboutUs(obj, id) {
             throw new Error("AboutUs could not be Updated");
         }
 
-        // ==================
-
-        // 2)= upload image
-        // if (hasImagePath || hasVideoPath || hasTrackPath) {
-        //     return data;
-        // }
-        // const uploadPromises = [];
+        //3)=============================
+        // 2) upload image
 
         if (!hasImagePath) {
             await supabase.storage
