@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 function ServiceCom({ service }) {
     const navigate = useNavigate();
+
     const { id: serviceId, icon, title, summary } = service;
     // console.log(icon, image);
 
@@ -30,6 +31,7 @@ function ServiceCom({ service }) {
 
                 <Heading as="h5">{title}</Heading>
                 <p>{summary}</p>
+
                 <Button onClick={() => navigate(`/services/${serviceId}`)}>
                     <span>learn more</span>
                     <FaChevronRight />
