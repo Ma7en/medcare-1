@@ -20,6 +20,7 @@ function NotFoundCom() {
                     <section>
                         <div>
                             <Heading as="h3">Page not found 😢</Heading>
+
                             <StyledBtns>
                                 <BackButton />
 

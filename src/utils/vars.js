@@ -273,3 +273,61 @@ export const aboutus = {
     ],
     id: 1,
 };
+
+export const iconsD = [
+    {
+        image: "France",
+        icon: "FaNotesMedical",
+        id: 1,
+    },
+    {
+        icon: "FaAmbulance",
+        image: "France",
+        title: "24/7 Ambulance",
+        summary:
+            "Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.",
+        description:
+            "Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis. Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.",
+        id: 2,
+    },
+    {
+        icon: "FaUserMd",
+        image: "France",
+        title: "Expert Doctors",
+        summary:
+            "Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.",
+        description:
+            "Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis. Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.",
+        id: 3,
+    },
+    {
+        icon: "FaPills",
+        image: "France",
+        title: "Medicines",
+        summary:
+            "Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.",
+        description:
+            "Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis. Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.",
+        id: 4,
+    },
+    {
+        icon: "FaProcedures",
+        image: "France",
+        title: "Bed Facility",
+        summary:
+            "Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.",
+        description:
+            "Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis. Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.",
+        id: 5,
+    },
+    {
+        icon: "FaHeartbeat",
+        image: "France",
+        title: "Total Care",
+        summary:
+            "Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.",
+        description:
+            "Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis. Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Ad, Omnis.",
+        id: 6,
+    },
+];

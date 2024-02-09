@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-
 import {
     FaAmbulance,
     FaChevronRight,
@@ -9,15 +8,15 @@ import {
     FaProcedures,
     FaUserMd,
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
 import Heading from "../global/Heading";
 import Button from "../global/Button";
-import { useNavigate } from "react-router-dom";
 
 function ServiceCom({ service }) {
     const navigate = useNavigate();
 
     const { id: serviceId, icon, title, summary } = service;
-    // console.log(icon, image);
 
     return (
         <>

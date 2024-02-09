@@ -12,14 +12,30 @@ import {
 import { useNavigate } from "react-router-dom";
 import Button from "../global/Button";
 import Heading from "../global/Heading";
-import { services } from "../../utils/vars";
+// import { services } from "../../utils/vars";
 import ServiceCom from "./ServiceCom";
+import { useServices } from "../../features/services/useServices";
+import Spinner from "../spinner/Spinner";
+import Empty from "../error/Empty";
 
 function ServicesCom() {
+    const { isLoading, services } = useServices();
     const navigate = useNavigate();
+
+    // console.log(`s--`, services);
 
     // const x = services;
     // console.log(`x`, x);
+
+    // const x = FaNotesMedical();
+    // const y = `<${x} />`;
+    // <div>
+    // {/* ss */}d{x}
+    // {/* {y} */}
+    // </div>
+
+    if (isLoading) return <Spinner />;
+    if (!services) return <Empty resourceName="service" />;
 
     return (
         <>

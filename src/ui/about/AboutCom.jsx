@@ -5,6 +5,7 @@ import Heading from "../global/Heading";
 import { useAboutUs } from "../../features/aboutus/useAboutUs";
 import Spinner from "../spinner/Spinner";
 import Picture from "../pictures/Picture";
+import Empty from "../error/Empty";
 
 function AboutCom() {
     const { title, summary } = aboutusVar;
@@ -14,6 +15,8 @@ function AboutCom() {
     // console.log(`a===`, aboutus);
 
     if (isLoading) return <Spinner />;
+    if (!aboutus) return <Empty resourceName="aboutus" />;
+
     return (
         <>
             <section className="about" id="about">
