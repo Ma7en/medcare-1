@@ -13,7 +13,7 @@ import Button from "../../ui/Button";
 import { useCreateCabin } from "./useCreateCabin";
 import { useUpdatetCabin } from "./useUpdateCabin";
 
-function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
+function CreateServiceForm({ cabinToEdit = {}, onCloseModal }) {
     const { isCreating, createCabin } = useCreateCabin();
     const { isUpdating, updateCabin } = useUpdatetCabin();
     const isWorking = isCreating || isUpdating;
@@ -172,4 +172,4 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
     );
 }
 
-export default CreateCabinForm;
+export default CreateServiceForm;

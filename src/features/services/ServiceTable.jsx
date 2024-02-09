@@ -1,14 +1,13 @@
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable no-undef */
 import { useSearchParams } from "react-router-dom";
 
-// import Spinner from "../../ui/Spinner";
-// import CabinRow from "./CabinRow";
-// import Table from "../../ui/Table";
-// import Menus from "../../ui/Menus";
-// import Empty from "../../ui/Empty";
+import { useServices } from "./useServices";
 
-// import { uesCabins } from "./useCabins";
+import Spinner from "../../ui/spinner/Spinner";
+import Empty from "../../ui/error/Empty";
+
+import Menus from "../../ui/modal/Menus";
+import Table from "../../ui/table/Table";
+import ServiceRow from "./ServiceRow";
 
 // const TableHeader = styled.header`
 //     display: grid;
@@ -24,28 +23,29 @@ import { useSearchParams } from "react-router-dom";
 //     padding: 1.6rem 2.4rem;
 // `;
 
-function BlogTable() {
-    const { isLoading, cabins } = uesCabins();
+function ServiceTable() {
+    // const { isLoading, cabins } = uesServices();
+    const { isLoading, services } = useServices();
     const [searchParams] = useSearchParams();
 
     if (isLoading) return <Spinner />;
-    if (!cabins.length) return <Empty resourceName="cabins" />;
+    if (!services.length) return <Empty resourceName="services" />;
 
     // 1) filter
     const filterValue = searchParams.get("discount") || "all";
 
-    let filteredCabins;
-    if (filterValue === "all") filteredCabins = cabins;
+    let filteredServices;
+    if (filterValue === "all") filteredServices = services;
     if (filterValue === "no-discount")
-        filteredCabins = cabins.filter((cabin) => cabin.discount === 0);
+        filteredServices = services.filter((cabin) => cabin.discount === 0);
     if (filterValue === "with-discount")
-        filteredCabins = cabins.filter((cabin) => cabin.discount > 0);
+        filteredServices = services.filter((cabin) => cabin.discount > 0);
 
     // 2) sort
     const sortBy = searchParams.get("sortBy") || "startDate-asc";
     const [field, direction] = sortBy.split("-");
     const modifier = direction === "asc" ? 1 : -1;
-    const sortedCabins = filteredCabins.sort(
+    const sortedServices = filteredServices.sort(
         (a, b) => (a[field] - b[field]) * modifier,
     );
 
@@ -64,10 +64,10 @@ function BlogTable() {
 
                     <Table.Body
                         // data={cabins}
-                        // data={filteredCabins}
-                        data={sortedCabins}
-                        render={(cabin) => (
-                            <CabinRow cabin={cabin} key={cabin.id} />
+                        // data={filteredServices}
+                        data={sortedServices}
+                        render={(service) => (
+                            <ServiceRow service={service} key={service.id} />
                         )}
                     />
                     {/* {cabins.map((cabin) => (
@@ -79,4 +79,4 @@ function BlogTable() {
     );
 }
 
-export default BlogTable;
+export default ServiceTable;

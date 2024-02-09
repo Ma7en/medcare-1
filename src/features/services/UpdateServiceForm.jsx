@@ -22,7 +22,7 @@ import Or from "../../ui/form/Or";
 
 // import { useAboutUs } from "./useAboutUs";
 
-function UpdateAboutUsForm({ about }) {
+function UpdateServiceForm({ service }) {
     const { user } = useUser();
     const { id: userId, email: userEmail } = user;
 
@@ -36,12 +36,12 @@ function UpdateAboutUsForm({ about }) {
         video,
         email,
         user_id,
-    } = about;
+    } = service;
     const { isUpdating, updateAboutUs } = useUpdateAboutUs();
 
     const { register, handleSubmit, reset, getValues, formState, setValue } =
         useForm({
-            defaultValues: about,
+            defaultValues: service,
         });
     const { errors } = formState;
 
@@ -345,4 +345,4 @@ function UpdateAboutUsForm({ about }) {
     );
 }
 
-export default UpdateAboutUsForm;
+export default UpdateServiceForm;

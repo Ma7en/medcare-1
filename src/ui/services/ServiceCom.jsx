@@ -28,6 +28,8 @@ function ServiceCom({ service }) {
                 {icon === "FaProcedures" && <FaProcedures />}
                 {icon === "FaHeartbeat" && <FaHeartbeat />}
 
+                {icon === "" || (icon === undefined && <FaUserMd />)}
+
                 <Heading as="h5">{title}</Heading>
                 <p>{summary}</p>
 

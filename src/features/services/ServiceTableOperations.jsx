@@ -1,7 +1,10 @@
+// import SortBy from "../../ui/pfs/SortBy";
+// import TableOperations from "../../ui/table/TableOperations";
+
 import SortBy from "../../ui/pfs/SortBy";
 import TableOperations from "../../ui/table/TableOperations";
 
-function BlogTableOperations() {
+function ServiceTableOperations() {
     return (
         <>
             <TableOperations>
@@ -41,4 +44,4 @@ function BlogTableOperations() {
     );
 }
 
-export default BlogTableOperations;
+export default ServiceTableOperations;

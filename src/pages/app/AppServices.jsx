@@ -1,6 +1,9 @@
 /* eslint-disable no-unused-vars */
 
 import BlogTableOperations from "../../features/blogs/BlogTableOperations";
+import AddService from "../../features/services/AddService";
+import ServiceTable from "../../features/services/ServiceTable";
+import ServiceTableOperations from "../../features/services/ServiceTableOperations";
 import Heading from "../../ui/global/Heading";
 import Row from "../../ui/global/Row";
 
@@ -9,13 +12,13 @@ function AppServices() {
         <>
             <Row type="horizontal">
                 <Heading as="h1">All Services</Heading>
-                <BlogTableOperations />
+                <ServiceTableOperations />
             </Row>
 
             <Row>
-                {/* <BlogTable /> */}
+                <ServiceTable />
 
-                {/* <AddBlog /> */}
+                <AddService />
             </Row>
         </>
     );
