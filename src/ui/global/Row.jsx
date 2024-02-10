@@ -15,6 +15,18 @@ const Row = styled.div`
             flex-direction: column;
             gap: 1.6rem;
         `}
+    ${(props) =>
+        props.edit === "edit" &&
+        css`
+            overflow-x: auto;
+            /* &::-webkit-scrollbar {
+                width: 0;
+                height: 0;
+            } */
+            > div {
+                min-width: 800px;
+            }
+        `}
 `;
 
 Row.defaultProps = {

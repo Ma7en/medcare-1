@@ -103,19 +103,6 @@ export async function createDoctor(obj, id) {
         console.error(error);
         throw new Error("Doctors could not be updated or uploaded");
     }
-
-    // const { data, error } = await supabase
-    //     .from("cities")
-    //     // .from("citiess")
-    //     // .insert([{ some_column: "someValue", other_column: "otherValue" }])
-    //     .insert([{ ...newCity }])
-    //     .select();
-
-    // if (error) {
-    //     console.error(error);
-    //     throw new Error("City could not be Created");
-    // }
-    // return data;
 }
 
 export async function updateDoctor(obj, id) {
@@ -196,19 +183,6 @@ export async function updateDoctor(obj, id) {
         console.error(error);
         throw new Error("Doctors could not be updated or uploaded");
     }
-
-    // const { data, error } = await supabase
-    //     .from("doctors")
-    //     .update(obj)
-    //     .eq("id", id)
-    //     .select()
-    //     .single();
-
-    // if (error) {
-    //     console.error(error);
-    //     throw new Error("Doctor could not be updated");
-    // }
-    // return data;
 }
 
 export async function deleteDoctor(id) {

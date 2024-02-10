@@ -65,20 +65,35 @@ export async function createService(obj, id) {
         // 1) create/edit service
         let query = supabase.from("services");
 
-        if (!id)
-            query = query.insert([
-                {
-                    ...obj,
-                    video: { ...obj.video, src: videoPath, track: trackPath },
-                    image: { ...obj.image, src: imagePath },
-                },
-            ]);
+        if (obj.image.src || obj.image.url || obj.video.src || obj.video.url) {
+            if (!id) {
+                query = query.insert([
+                    {
+                        ...obj,
+                        video: {
+                            ...obj.video,
+                            src: videoPath,
+                            track: trackPath,
+                        },
+                        image: { ...obj.image, src: imagePath },
+                    },
+                ]);
+            }
+        } else {
+            if (!id) {
+                query = query.insert([
+                    {
+                        ...obj,
+                    },
+                ]);
+            }
+        }
 
         const { data, error } = await query.select().single();
 
         if (error) {
             console.error(error);
-            throw new Error("Services could not be Updated");
+            throw new Error("Service could not be Created");
         }
 
         //3)=============================
@@ -102,7 +117,7 @@ export async function createService(obj, id) {
         return data;
     } catch (error) {
         console.error(error);
-        throw new Error("Services could not be updated or uploaded");
+        throw new Error("Service could not be Created");
     }
 }
 

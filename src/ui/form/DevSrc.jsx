@@ -13,6 +13,11 @@ const StyledDevSrc = styled.div`
     width: 100%;
     /* gap: 3rem; */
     /* justify-content: space-between; */
+
+    /* start max 767px */
+    @media (max-width: 767px) {
+        padding-left: 1.5rem;
+    }
     label {
         font-size: 1.4rem;
         font-weight: 400;

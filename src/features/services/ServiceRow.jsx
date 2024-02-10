@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
@@ -24,12 +25,26 @@ import { useCreateService } from "./useCreateService";
 // `;
 
 const Img = styled.img`
-    display: block;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* display: block;
     width: 6.4rem;
     aspect-ratio: 3 / 2;
     object-fit: cover;
     object-position: center;
-    transform: scale(1.5) translateX(-7px);
+    transform: scale(1.5) translateX(-7px); */
+    border-radius: var(--border-radius-tiny);
+`;
+
+const Video = styled.video`
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 const Cabin = styled.div`
@@ -56,35 +71,56 @@ function ServiceRow({ service }) {
 
     const {
         id: serviceId,
+        dataupdate,
+        description,
         title,
+        icon,
         image,
         video,
         summary,
         email,
         user_id,
+        username,
     } = service;
 
     function handleDeuplicate() {
         createService({
+            dataupdate: new Date().toISOString(),
             title: `Capy of ${title}`,
+            summary,
+            description,
+            icon,
             image,
             video,
-            summary,
             email,
             user_id,
+            username,
         });
     }
 
     return (
         <>
             <Table.Row>
-                <Img src={image} />
+                {/* <Img src={image.src} alt={image.alt} /> */}
+                <Img
+                    src={
+                        image.src ||
+                        image.url ||
+                        "/images/services/avter-service.png"
+                    }
+                />
+
+                <Video
+                    src={video.src || video.url || "/vidoes/neurorons.mp4"}
+                />
 
                 <Cabin>{title}</Cabin>
 
-                <Img src={video} />
+                <div>
+                    <p>{summary}</p>
+                </div>
 
-                <div>{summary}</div>
+                <div>{username}</div>
 
                 {/* <Price>{formatCurrency(regularPrice)}</Price> */}
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import Row from "../../ui/global/Row";
 import Heading from "../../ui/global/Heading";
-// import ServiceTableOperations from "../../features/services/ServiceTableOperations";
+import ServiceTableOperations from "../../features/services/ServiceTableOperations";
 import ServiceTable from "../../features/services/ServiceTable";
 import AddService from "../../features/services/AddService";
 
@@ -13,10 +13,10 @@ function AppServices() {
                 {/* <ServiceTableOperations /> */}
             </Row>
 
-            <Row>
-                {/* <ServiceTable />
+            <Row edit="edit">
+                <ServiceTable />
 
-                <AddService /> */}
+                <AddService />
             </Row>
         </>
     );

@@ -20,6 +20,10 @@ const Label = styled.label`
             font-size: 1.4rem;
             font-weight: 400;
             padding-left: 15px;
+            /* start max 767px */
+            @media (max-width: 767px) {
+                padding: 0;
+            }
         `}
 `;
 export default Label;

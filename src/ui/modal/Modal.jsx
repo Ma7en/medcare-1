@@ -6,34 +6,50 @@ import { HiXMark } from "react-icons/hi2";
 import styled from "styled-components";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 
-const StyledModal = styled.div`
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: var(--color-grey-0);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-lg);
-    padding: 3.2rem 4rem;
-    transition: all 0.5s;
-`;
-
 const Overlay = styled.div`
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
-    background-color: var(--backdrop-color);
+    min-height: 100vh;
+    /* background-color: var(--backdrop-color); */
     backdrop-filter: blur(4px);
     z-index: 1000;
-    transition: all 0.5s;
+    transition: var(--main-transition);
+    overflow-y: auto;
+`;
+
+const StyledModal = styled.div`
+    width: 80%;
+    position: fixed;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, -0%);
+    background-color: var(--color-grey-0);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 3.2rem 4rem;
+    transition: var(--main-transition);
+
+    background-color: var(--back-box);
+    border: var(--border);
+    box-shadow: var(--box-shadow);
+    border-radius: 0.5rem;
+    /* start max 767px */
+    @media (max-width: 767px) {
+        width: 100%;
+        padding: 0;
+    }
+`;
+
+const StyledDivClone = styled.div`
+    width: 100%;
 `;
 
 const Button = styled.button`
     background: none;
     border: none;
-    padding: 0.4rem;
+    /* padding: 0.4rem; */
     /* border-radius: var(--border-radius-sm); */
     border-radius: 50%;
     color: var(--color-brand-600);
@@ -42,22 +58,30 @@ const Button = styled.button`
     top: 1.2rem;
     right: 1.9rem;
 
-    border: 1px solid var(--color-grey-500);
+    /* border: 1px solid var(--color-grey-500); */
     border-radius: 50%;
 
-    z-index: 2;
-    transition: all 0.5s;
+    z-index: 5;
+    transition: var(--main-transition);
+
+    width: 3rem;
+    height: 3rem;
+    border: var(--border);
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
         /* background-color: var(--color-grey-100); */
         background-color: var(--color-brand-600);
         color: var(--color-grey-0);
 
-        border: 1px solid var(--color-grey-0);
-        transition: all 0.5s;
+        border-color: transparent;
+        transition: var(--main-transition);
         svg {
             color: var(--color-grey-500);
-            transition: all 0.5s;
+            transition: var(--main-transition);
         }
     }
 
@@ -69,10 +93,10 @@ const Button = styled.button`
         stroke: var(--color-grey-500); */
 
         color: var(--color-grey-500);
-        transition: all 0.5s;
+        transition: var(--main-transition);
         &:hover {
             color: var(--color-grey-500);
-            transition: all 0.5s;
+            transition: var(--main-transition);
         }
     }
 `;
@@ -113,7 +137,9 @@ function Window({ children, name }) {
                     <HiXMark />
                 </Button>
 
-                <div>{cloneElement(children, { onCloseModal: close })}</div>
+                <StyledDivClone>
+                    {cloneElement(children, { onCloseModal: close })}
+                </StyledDivClone>
             </StyledModal>
         </Overlay>,
         document.body,

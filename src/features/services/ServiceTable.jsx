@@ -25,9 +25,8 @@ import ServiceRow from "./ServiceRow";
 // `;
 
 function ServiceTable() {
-    // const { isLoading, cabins } = uesServices();
     const { isLoading, services } = useServices();
-    // const [searchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     if (isLoading) return <Spinner />;
     if (!services.length) return <Empty resourceName="services" />;
@@ -42,31 +41,41 @@ function ServiceTable() {
     // if (filterValue === "with-discount")
     //     filteredServices = services.filter((cabin) => cabin.discount > 0);
 
-    // // 2) sort
-    // const sortBy = searchParams.get("sortBy") || "startDate-asc";
-    // const [field, direction] = sortBy.split("-");
-    // const modifier = direction === "asc" ? 1 : -1;
-    // const sortedServices = filteredServices.sort(
-    //     (a, b) => (a[field] - b[field]) * modifier,
+    // 2) sort
+    const sortBy = searchParams.get("sortBy") || "startDate-asc";
+    const [field, direction] = sortBy.split("-");
+    const modifier = direction === "asc" ? 1 : -1;
+    const sortedServices = services.sort(
+        (a, b) => (a[field] - b[field]) * modifier,
+    );
+
+    // console.log(`sortBy`, sortBy);
+    // console.log(`field`, field);
+    // console.log(`direction`, direction);
+    // console.log(`modifier`, modifier);
+    // console.log(`sortedServices`, sortedServices);
+    // console.log(
+    //     `Services`,
+    //     services.sort((a, b) => console.log(`-x`, a, b)),
     // );
 
     return (
         <>
             <Menus>
-                <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
+                <Table columns="0.6fr 0.6fr 1fr 2fr .6fr 0.2fr">
                     <Table.Header>
-                        <div>title</div>
                         <div>images</div>
                         <div>video</div>
+                        <div>title</div>
                         <div>summary</div>
-                        <div>user</div>
+                        <div>admin</div>
                         <div></div>
                     </Table.Header>
 
                     <Table.Body
                         // data={cabins}
                         // data={filteredServices}
-                        // data={sortedServices}
+                        data={sortedServices}
                         render={(service) => (
                             <ServiceRow service={service} key={service.id} />
                         )}

@@ -103,18 +103,6 @@ export async function createReview(obj, id) {
         console.error(error);
         throw new Error("Reviews could not be updated or uploaded");
     }
-
-    // const { data, error } = await supabase
-    //     .from("cities")
-    //     // .from("citiess")
-    //     // .insert([{ some_column: "someValue", other_column: "otherValue" }])
-    //     .insert([{ ...newCity }])
-    //     .select();
-    // if (error) {
-    //     console.error(error);
-    //     throw new Error("City could not be Created");
-    // }
-    // return data;
 }
 
 export async function updateReview(obj, id) {
@@ -195,19 +183,6 @@ export async function updateReview(obj, id) {
         console.error(error);
         throw new Error("Reviews could not be updated or uploaded");
     }
-
-    // const { data, error } = await supabase
-    //     .from("cities")
-    //     .update(obj)
-    //     .eq("id", id)
-    //     .select()
-    //     .single();
-
-    // if (error) {
-    //     console.error(error);
-    //     throw new Error("City could not be updated");
-    // }
-    // return data;
 }
 
 export async function deleteReview(id) {

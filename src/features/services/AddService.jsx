@@ -10,11 +10,13 @@ function AddService() {
         <>
             <div>
                 <Modal>
-                    <Modal.Open opens="cabin-form">
-                        <Button>Add new Service</Button>
+                    <Modal.Open opens="service-form">
+                        <Button style={{ margin: "2rem 0rem" }}>
+                            Add new Service
+                        </Button>
                     </Modal.Open>
 
-                    <Modal.Window name="cabin-form">
+                    <Modal.Window name="service-form">
                         <CreateServiceForm />
                     </Modal.Window>
                 </Modal>
