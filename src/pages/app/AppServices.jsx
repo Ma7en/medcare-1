@@ -1,24 +1,22 @@
 /* eslint-disable no-unused-vars */
-
-import BlogTableOperations from "../../features/blogs/BlogTableOperations";
-import AddService from "../../features/services/AddService";
-import ServiceTable from "../../features/services/ServiceTable";
-import ServiceTableOperations from "../../features/services/ServiceTableOperations";
-import Heading from "../../ui/global/Heading";
 import Row from "../../ui/global/Row";
+import Heading from "../../ui/global/Heading";
+// import ServiceTableOperations from "../../features/services/ServiceTableOperations";
+import ServiceTable from "../../features/services/ServiceTable";
+import AddService from "../../features/services/AddService";
 
 function AppServices() {
     return (
         <>
             <Row type="horizontal">
                 <Heading as="h1">All Services</Heading>
-                <ServiceTableOperations />
+                {/* <ServiceTableOperations /> */}
             </Row>
 
             <Row>
-                <ServiceTable />
+                {/* <ServiceTable />
 
-                <AddService />
+                <AddService /> */}
             </Row>
         </>
     );

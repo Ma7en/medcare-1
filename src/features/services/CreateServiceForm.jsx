@@ -2,56 +2,90 @@
 /* eslint-disable react/prop-types */
 
 import { useForm } from "react-hook-form";
+import { useCreateService } from "./useCreateService";
+// import { useUpdateService } from "./useUpdateService";
+import { useUser } from "../authentication/useUser";
+import Form from "../../ui/form/Form";
+import FormRow from "../../ui/form/FormRow";
+import Input from "../../ui/form/Input";
+import Textarea from "../../ui/form/Textarea";
+import FileInput from "../../ui/form/FileInput";
+import Button from "../../ui/global/Button";
+import FormRowVertical from "../../ui/form/FormRowVertical";
+import DevSrc from "../../ui/form/DevSrc";
+import Label from "../../ui/form/Label";
+import Or from "../../ui/form/Or";
 
-import Form from "../../ui/Form";
-import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
-import Textarea from "../../ui/Textarea";
-import FileInput from "../../ui/FileInput";
-import Button from "../../ui/Button";
+// import { useForm } from "react-hook-form";
 
-import { useCreateCabin } from "./useCreateCabin";
-import { useUpdatetCabin } from "./useUpdateCabin";
+// import Form from "../../ui/Form";
+// import FormRow from "../../ui/FormRow";
+// import Input from "../../ui/Input";
+// import Textarea from "../../ui/Textarea";
+// import FileInput from "../../ui/FileInput";
+// import Button from "../../ui/Button";
 
-function CreateServiceForm({ cabinToEdit = {}, onCloseModal }) {
-    const { isCreating, createCabin } = useCreateCabin();
-    const { isUpdating, updateCabin } = useUpdatetCabin();
-    const isWorking = isCreating || isUpdating;
+// import { useCreateCabin } from "./useCreateCabin";
+// import { useUpdatetCabin } from "./useUpdateCabin";
 
-    const { id: editId, ...editValues } = cabinToEdit;
-    const isEditSession = Boolean(editId);
+function CreateServiceForm({ onCloseModal }) {
+    const { user } = useUser();
+    const { id: userId, email: userEmail } = user;
+    const { fullName, avatar } = user.user_metadata;
+
+    const { isCreating, createService } = useCreateService();
+    // const { isUpdating, updateService } = useUpdateService();
+
+    // const isWorking = isCreating || isUpdating;
+
+    // const { id: editId, ...editValues } = cabinToEdit;
+    // const isEditSession = Boolean(editId);
 
     // console.log(`Boolean:- `, Boolean(editId), editId);
 
-    const { register, handleSubmit, reset, getValues, formState } = useForm({
-        defaultValues: isEditSession ? editValues : {},
-    });
+    const { register, handleSubmit, reset, getValues, formState } = useForm({});
     const { errors } = formState;
 
     function onSubmit(data) {
-        const image =
-            typeof data.image === "string" ? data.image : data.image[0];
+        // const image =
+        //     typeof data.image === "string" ? data.image : data.image[0];
 
-        if (isEditSession)
-            updateCabin(
-                { newCabinData: { ...data, image }, id: editId },
-                {
-                    onSuccess: (data) => {
-                        reset();
-                        onCloseModal?.();
-                    },
+        let imageSrc =
+            data.image && data.image.src ? data.image.src[0] : data.image.src;
+        // typeof data.image === "string" ? data?.image : data?.image?.src[0];
+        let ImageE = {
+            ...data.image,
+            src: imageSrc,
+        };
+
+        let videoSrc =
+            data.video && data.video.src ? data.video.src[0] : data.video.src;
+        let videoTrack =
+            data.video && data.video.track
+                ? data.video.track[0]
+                : data.video.track;
+        let videoE = {
+            ...data.video,
+            src: videoSrc,
+            track: videoTrack,
+        };
+
+        createService(
+            {
+                ...data,
+                image: { ...ImageE },
+                video: { ...videoE },
+                email: userEmail,
+                user_id: userId,
+                nameuser: fullName,
+            },
+            {
+                onSuccess: (data) => {
+                    reset();
+                    onCloseModal?.();
                 },
-            );
-        else
-            createCabin(
-                { ...data, image: image },
-                {
-                    onSuccess: (data) => {
-                        reset();
-                        onCloseModal?.();
-                    },
-                },
-            );
+            },
+        );
     }
 
     function onError(errors) {
@@ -63,96 +97,187 @@ function CreateServiceForm({ cabinToEdit = {}, onCloseModal }) {
             onSubmit={handleSubmit(onSubmit, onError)}
             type={onCloseModal ? "modal" : "regular"}
         >
-            <FormRow label="Cabin name" error={errors?.name?.message}>
+            <FormRowVertical
+                label="Service title"
+                error={errors?.title?.message}
+            >
                 <Input
                     type="text"
-                    id="name"
-                    disabled={isWorking}
-                    {...register("name", {
+                    id="title"
+                    disabled={isCreating}
+                    {...register("title", {
                         required: "This field is required",
                     })}
                 />
-            </FormRow>
+            </FormRowVertical>
 
-            <FormRow
-                label="Maximum capacity"
-                error={errors?.maxCapacity?.message}
-            >
+            <FormRowVertical label="Service icon" error={errors?.icon?.message}>
                 <Input
-                    type="number"
-                    id="maxCapacity"
-                    disabled={isWorking}
-                    {...register("maxCapacity", {
-                        required: "This field is required",
-                        min: {
-                            value: 1,
-                            message: "Capacity should be at least 1",
-                        },
+                    type="text"
+                    id="icon"
+                    disabled={isCreating}
+                    {...register("icon", {
+                        // required: "This field is required",
                     })}
                 />
-            </FormRow>
+            </FormRowVertical>
 
-            <FormRow
-                label="Regular price"
-                error={errors?.regularPrice?.message}
-            >
-                <Input
-                    type="number"
-                    id="regularPrice"
-                    disabled={isWorking}
-                    {...register("regularPrice", {
-                        required: "This field is required",
-                        min: {
-                            value: 1,
-                            message: "Capacity should be at least 1",
-                        },
-                    })}
-                />
-            </FormRow>
-
-            <FormRow label="Discount" error={errors?.discount?.message}>
-                <Input
-                    type="number"
-                    id="discount"
-                    disabled={isWorking}
-                    defaultValue={0}
-                    {...register("discount", {
-                        required: "This field is required",
-                        validate: (value) =>
-                            value <= getValues().regularPrice ||
-                            "Discount should be less than regualr price",
-                    })}
-                />
-            </FormRow>
-
-            <FormRow
-                label="Description for website"
-                error={errors?.description?.message}
+            <FormRowVertical
+                label="summary for Service"
+                error={errors?.summary?.message}
             >
                 <Textarea
-                    type="number"
-                    id="description"
+                    id="summary"
                     defaultValue=""
-                    disabled={isWorking}
-                    {...register("description", {
+                    disabled={isCreating}
+                    {...register("summary", {
                         required: "This field is required",
                     })}
                 />
-            </FormRow>
+            </FormRowVertical>
 
-            {/* <FormRow label="Cabin photo" error={errors?.image?.message}> */}
-            <FormRow label="Cabin photo" error={errors?.image?.message}>
-                <FileInput
-                    id="image"
-                    accept="image/*"
-                    // type="file"
-                    {...register("image", {
-                        required: isEditSession
-                            ? false
-                            : "This field is required",
-                    })}
-                />
-            </FormRow>
+            {/* <FormRowVertical
+                label="Description for Service"
+                error={errors?.description?.message}
+            >
+                <>
+                    {Object.keys(description).map((des) => (
+                        <Input
+                            key={des}
+                            type="text"
+                            id={`description.${des}`}
+                            disabled={isCreating}
+                            {...register(`description.${des}`, {
+                                // required: "This field is required",
+                            })}
+                        />
+                    ))}
+                </>
+            </FormRowVertical> */}
+
+            <FormRowVertical
+                label="Service video"
+                error={errors?.video?.message}
+            >
+                <>
+                    <DevSrc>
+                        <Label type="3" htmlFor="video">
+                            Choose the video
+                        </Label>
+
+                        <FileInput
+                            id="video"
+                            accept="video/* "
+                            // type="file"
+                            {...register("video.src", {
+                                // required: "This field is required",
+                            })}
+                        />
+                    </DevSrc>
+
+                    <Or />
+
+                    <DevSrc>
+                        <Label type="3" htmlFor="urlvideo">
+                            Type the URL
+                        </Label>
+
+                        <Input
+                            type="text"
+                            id="urlvideo"
+                            disabled={isCreating}
+                            {...register("video.url", {
+                                // required: "This field is required",
+                            })}
+                        />
+                    </DevSrc>
+
+                    <DevSrc>
+                        <Label type="3" htmlFor="track">
+                            Choose the Track video
+                        </Label>
+
+                        <FileInput
+                            id="track"
+                            // accept="text/*,.srt,.vtt"
+                            accept=".txt,.srt,.vtt"
+                            // type="file"
+                            {...register("video.track", {
+                                // required: "This field is required",
+                            })}
+                        />
+                    </DevSrc>
+                </>
+            </FormRowVertical>
+
+            <FormRowVertical
+                label="Service photo"
+                error={errors?.image?.message}
+            >
+                <>
+                    <DevSrc>
+                        <Label type="3" htmlFor="image">
+                            Choose the picture
+                        </Label>
+
+                        <FileInput
+                            id="image"
+                            accept="image/* "
+                            {...register("image.src", {
+                                // required: image.src
+                                //     ? false
+                                //     : "This field is required",
+                            })}
+                        />
+                    </DevSrc>
+                    <Or />
+                    <DevSrc>
+                        <Label type="3" htmlFor="url">
+                            Type the URL
+                        </Label>
+
+                        <Input
+                            type="text"
+                            id="url"
+                            disabled={isCreating}
+                            {...register("image.url", {
+                                // required: "This field is required",
+                            })}
+                        />
+                    </DevSrc>
+
+                    <DevSrc>
+                        <Label type="3" htmlFor="alt">
+                            Enter your description picture
+                        </Label>
+                        <Input
+                            type="text"
+                            id="alt"
+                            placeholder="Enter your description picture"
+                            disabled={isCreating}
+                            {...register("image.alt", {
+                                required: "This field is required",
+                            })}
+                        />
+                    </DevSrc>
+
+                    <DevSrc>
+                        <Label type="3" htmlFor="caption">
+                            Enter your Caption picture
+                        </Label>
+
+                        <Input
+                            type="text"
+                            id="caption"
+                            placeholder="Enter your Caption picture"
+                            disabled={isCreating}
+                            {...register("image.caption", {
+                                required: "This field is required",
+                            })}
+                        />
+                    </DevSrc>
+                </>
+            </FormRowVertical>
 
             <FormRow>
                 {/* type is an HTML attribute! */}
@@ -164,9 +289,7 @@ function CreateServiceForm({ cabinToEdit = {}, onCloseModal }) {
                     Cancel
                 </Button>
 
-                <Button disabled={isWorking}>
-                    {isEditSession ? "Edit Cabin" : "Create new cabin"}
-                </Button>
+                <Button disabled={isCreating}>Create</Button>
             </FormRow>
         </Form>
     );

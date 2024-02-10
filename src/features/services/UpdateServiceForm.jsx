@@ -1,24 +1,40 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-
-import AboutCreated from "../../ui/about/AboutCreated";
+import { useUser } from "../authentication/useUser";
+import { useUpdateService } from "./useUpdateService";
+import { useEffect } from "react";
+import Spinner from "../../ui/spinner/Spinner";
 import Form from "../../ui/form/Form";
-import FormRow from "../../ui/form/FormRow";
 import FormRowVertical from "../../ui/form/FormRowVertical";
-import DevSrc from "../../ui/form/DevSrc";
 import Input from "../../ui/form/Input";
 import Textarea from "../../ui/form/Textarea";
-import FileInput from "../../ui/form/FileInput";
-import Button from "../../ui/global/Button";
+import DevSrc from "../../ui/form/DevSrc";
 import Label from "../../ui/form/Label";
-import Spinner from "../../ui/spinner/Spinner";
-
-import { useUpdateAboutUs } from "./useUpdateAboutUs";
-import { useUser } from "../authentication/useUser";
+import FileInput from "../../ui/form/FileInput";
 import Or from "../../ui/form/Or";
+import FormRow from "../../ui/form/FormRow";
+import Button from "../../ui/global/Button";
+
+// import { useEffect } from "react";
+// import { useForm } from "react-hook-form";
+
+// import AboutCreated from "../../ui/about/AboutCreated";
+// import Form from "../../ui/form/Form";
+// import FormRow from "../../ui/form/FormRow";
+// import FormRowVertical from "../../ui/form/FormRowVertical";
+// import DevSrc from "../../ui/form/DevSrc";
+// import Input from "../../ui/form/Input";
+// import Textarea from "../../ui/form/Textarea";
+// import FileInput from "../../ui/form/FileInput";
+// import Button from "../../ui/global/Button";
+// import Label from "../../ui/form/Label";
+// import Spinner from "../../ui/spinner/Spinner";
+
+// import { useUpdateAboutUs } from "./useUpdateAboutUs";
+// import { useUser } from "../authentication/useUser";
+// import Or from "../../ui/form/Or";
 
 // import { useAboutUs } from "./useAboutUs";
 
@@ -29,15 +45,16 @@ function UpdateServiceForm({ service }) {
     const {
         id: updateId,
         dataupdate,
+        icon,
+        image,
+        video,
         title,
         summary,
         description,
-        image,
-        video,
         email,
         user_id,
     } = service;
-    const { isUpdating, updateAboutUs } = useUpdateAboutUs();
+    const { isUpdating, updateService } = useUpdateService();
 
     const { register, handleSubmit, reset, getValues, formState, setValue } =
         useForm({
@@ -128,9 +145,9 @@ function UpdateServiceForm({ service }) {
             track: videoTrack,
         };
 
-        updateAboutUs(
+        updateService(
             {
-                newAboutUsData: {
+                newServiceData: {
                     ...data,
                     image: { ...ImageE },
                     video: { ...videoE },
@@ -156,11 +173,11 @@ function UpdateServiceForm({ service }) {
 
     return (
         <>
-            <AboutCreated dataupdate={dataupdate} />
+            {/* <ServiceCreated dataupdate={dataupdate} /> */}
 
             <Form onSubmit={handleSubmit(onSubmit, onError)} type={"updata"}>
                 <FormRowVertical
-                    label="About title"
+                    label="Service title"
                     error={errors?.title?.message}
                 >
                     <Input
@@ -174,7 +191,7 @@ function UpdateServiceForm({ service }) {
                 </FormRowVertical>
 
                 <FormRowVertical
-                    label="summary for About"
+                    label="summary for Service"
                     error={errors?.summary?.message}
                 >
                     <Textarea
@@ -188,7 +205,7 @@ function UpdateServiceForm({ service }) {
                 </FormRowVertical>
 
                 <FormRowVertical
-                    label="Description for About"
+                    label="Description for Service"
                     error={errors?.description?.message}
                 >
                     <>
@@ -207,7 +224,7 @@ function UpdateServiceForm({ service }) {
                 </FormRowVertical>
 
                 <FormRowVertical
-                    label="About video"
+                    label="Service video"
                     error={errors?.video?.message}
                 >
                     <>
@@ -262,7 +279,7 @@ function UpdateServiceForm({ service }) {
                 </FormRowVertical>
 
                 <FormRowVertical
-                    label="About photo"
+                    label="Service photo"
                     error={errors?.image?.message}
                 >
                     <>

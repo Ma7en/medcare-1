@@ -6,11 +6,11 @@ import Table from "../../ui/table/Table";
 import Modal from "../../ui/modal/Modal";
 import Menus from "../../ui/modal/Menus";
 // import CreateServiceForm from "./CreateServiceForm";
+import UpdateServiceForm from "./UpdateServiceForm";
 import ConfirmDelete from "../../ui/modal/ConfirmDelete";
 
 import { useDeleteService } from "./useDeleteService";
 import { useCreateService } from "./useCreateService";
-import UpdateServiceForm from "./UpdateServiceForm";
 
 // const TableRow = styled.div`
 //     display: grid;
@@ -56,22 +56,22 @@ function ServiceRow({ service }) {
 
     const {
         id: serviceId,
-        name,
-        maxCapacity,
-        regularPrice,
-        discount,
-        description,
+        title,
         image,
+        video,
+        summary,
+        email,
+        user_id,
     } = service;
 
     function handleDeuplicate() {
         createService({
-            name: `Capy of ${name}`,
-            maxCapacity,
-            regularPrice,
-            discount,
-            description,
+            title: `Capy of ${title}`,
             image,
+            video,
+            summary,
+            email,
+            user_id,
         });
     }
 
@@ -80,9 +80,11 @@ function ServiceRow({ service }) {
             <Table.Row>
                 <Img src={image} />
 
-                <Cabin>{name}</Cabin>
+                <Cabin>{title}</Cabin>
 
-                <div>Fits up to {maxCapacity} guests</div>
+                <Img src={video} />
+
+                <div>{summary}</div>
 
                 {/* <Price>{formatCurrency(regularPrice)}</Price> */}
 

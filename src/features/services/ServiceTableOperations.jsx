@@ -1,6 +1,3 @@
-// import SortBy from "../../ui/pfs/SortBy";
-// import TableOperations from "../../ui/table/TableOperations";
-
 import SortBy from "../../ui/pfs/SortBy";
 import TableOperations from "../../ui/table/TableOperations";
 
