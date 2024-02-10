@@ -1,32 +1,32 @@
 /* eslint-disable no-unused-vars */
 import supabase, { supabaseUrl } from "./supabase";
 
-export async function getDoctors() {
-    let { data, error } = await supabase.from("doctors").select("*");
+export async function getReviews() {
+    let { data, error } = await supabase.from("reviews").select("*");
 
     if (error) {
         console.error(error);
-        throw new Error(`Doctors could not be loaded`);
+        throw new Error(`Reviews could not be loaded`);
     }
     return data;
 }
 
-export async function getDoctor(id) {
+export async function getReview(id) {
     const { data, error } = await supabase
-        .from("doctors")
+        .from("reviews")
         .select("*")
         .eq("id", id)
         .single();
 
     if (error) {
         console.error(error);
-        throw new Error("Doctor not found");
+        throw new Error("Review not found");
     }
 
     return data;
 }
 
-export async function createDoctor(obj, id) {
+export async function createReview(obj, id) {
     // console.log(`c`, obj);
     try {
         //1)=============================
@@ -38,7 +38,7 @@ export async function createDoctor(obj, id) {
         );
         const imagePath = hasImagePath
             ? obj.image.src
-            : `${supabaseUrl}/storage/v1/object/public/images/doctors/${imageName}`;
+            : `${supabaseUrl}/storage/v1/object/public/images/reviews/${imageName}`;
 
         //2) videoSrc
         const hasVideoPath = obj.video?.src?.startsWith?.(supabaseUrl);
@@ -48,7 +48,7 @@ export async function createDoctor(obj, id) {
         );
         const videoPath = hasVideoPath
             ? obj.video.src
-            : `${supabaseUrl}/storage/v1/object/public/images/doctors/${videoName}`;
+            : `${supabaseUrl}/storage/v1/object/public/images/reviews/${videoName}`;
 
         //3) videoTrack
         const hasTrackPath = obj.video?.track?.startsWith?.(supabaseUrl);
@@ -58,11 +58,11 @@ export async function createDoctor(obj, id) {
         );
         const trackPath = hasTrackPath
             ? obj.video.track
-            : `${supabaseUrl}/storage/v1/object/public/images/doctors/${trackName}`;
+            : `${supabaseUrl}/storage/v1/object/public/images/reviews/${trackName}`;
 
         //3)=============================
         // 1) create/edit service
-        let query = supabase.from("doctors");
+        let query = supabase.from("reviews");
 
         if (!id)
             query = query.insert([
@@ -77,31 +77,31 @@ export async function createDoctor(obj, id) {
 
         if (error) {
             console.error(error);
-            throw new Error("Doctors could not be Updated");
+            throw new Error("Reviews could not be Updated");
         }
 
         //3)=============================
         // 2) upload image
         if (!hasImagePath) {
             await supabase.storage
-                .from("images/doctors")
+                .from("images/reviews")
                 .upload(imageName, obj.image.src);
         }
         if (!hasVideoPath) {
             await supabase.storage
-                .from("images/doctors")
+                .from("images/reviews")
                 .upload(videoName, obj.video.src);
         }
         if (!hasTrackPath) {
             await supabase.storage
-                .from("images/doctors")
+                .from("images/reviews")
                 .upload(trackName, obj.video.track);
         }
 
         return data;
     } catch (error) {
         console.error(error);
-        throw new Error("Doctors could not be updated or uploaded");
+        throw new Error("Reviews could not be updated or uploaded");
     }
 
     // const { data, error } = await supabase
@@ -110,7 +110,6 @@ export async function createDoctor(obj, id) {
     //     // .insert([{ some_column: "someValue", other_column: "otherValue" }])
     //     .insert([{ ...newCity }])
     //     .select();
-
     // if (error) {
     //     console.error(error);
     //     throw new Error("City could not be Created");
@@ -118,7 +117,7 @@ export async function createDoctor(obj, id) {
     // return data;
 }
 
-export async function updateDoctor(obj, id) {
+export async function updateReview(obj, id) {
     try {
         //1)=============================
         // 1) image
@@ -129,7 +128,7 @@ export async function updateDoctor(obj, id) {
         );
         const imagePath = hasImagePath
             ? obj.image.src
-            : `${supabaseUrl}/storage/v1/object/public/images/doctors/${imageName}`;
+            : `${supabaseUrl}/storage/v1/object/public/images/reviews/${imageName}`;
 
         //2) videoSrc
         const hasVideoPath = obj.video?.src?.startsWith?.(supabaseUrl);
@@ -139,7 +138,7 @@ export async function updateDoctor(obj, id) {
         );
         const videoPath = hasVideoPath
             ? obj.video.src
-            : `${supabaseUrl}/storage/v1/object/public/images/doctors/${videoName}`;
+            : `${supabaseUrl}/storage/v1/object/public/images/reviews/${videoName}`;
 
         //3) videoTrack
         const hasTrackPath = obj.video?.track?.startsWith?.(supabaseUrl);
@@ -149,11 +148,11 @@ export async function updateDoctor(obj, id) {
         );
         const trackPath = hasTrackPath
             ? obj.video.track
-            : `${supabaseUrl}/storage/v1/object/public/images/doctors/${trackName}`;
+            : `${supabaseUrl}/storage/v1/object/public/images/reviews/${trackName}`;
 
         // 2) ==================
         // 1) create/edit service
-        let query = supabase.from("doctors");
+        let query = supabase.from("reviews");
 
         // B) EDIT
         if (id) {
@@ -170,35 +169,35 @@ export async function updateDoctor(obj, id) {
 
         if (error) {
             console.error(error);
-            throw new Error("Doctors could not be Updated");
+            throw new Error("Reviews could not be Updated");
         }
 
         //3)  ============================
         // 1) upload image and video and track
         if (!hasImagePath) {
             await supabase.storage
-                .from("images/doctors")
+                .from("images/reviews")
                 .upload(imageName, obj.image.src);
         }
         if (!hasVideoPath) {
             await supabase.storage
-                .from("images/doctors")
+                .from("images/reviews")
                 .upload(videoName, obj.video.src);
         }
         if (!hasTrackPath) {
             await supabase.storage
-                .from("images/doctors")
+                .from("images/reviews")
                 .upload(trackName, obj.video.track);
         }
 
         return data;
     } catch (error) {
         console.error(error);
-        throw new Error("Doctors could not be updated or uploaded");
+        throw new Error("Reviews could not be updated or uploaded");
     }
 
     // const { data, error } = await supabase
-    //     .from("doctors")
+    //     .from("cities")
     //     .update(obj)
     //     .eq("id", id)
     //     .select()
@@ -206,20 +205,20 @@ export async function updateDoctor(obj, id) {
 
     // if (error) {
     //     console.error(error);
-    //     throw new Error("Doctor could not be updated");
+    //     throw new Error("City could not be updated");
     // }
     // return data;
 }
 
-export async function deleteDoctor(id) {
+export async function deleteReview(id) {
     const { data, error } = await supabase
-        .from("doctors")
+        .from("reviews")
         .delete()
         .eq("id", id);
 
     if (error) {
         console.error(error);
-        throw new Error("Doctor could not be deleted");
+        throw new Error("Reviews could not be deleted");
     }
 
     return data;

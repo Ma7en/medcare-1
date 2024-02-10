@@ -2,15 +2,15 @@
 import styled from "styled-components";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 
-import Table from "../../ui/Table";
-import Modal from "../../ui/Modal";
-import Menus from "../../ui/Menus";
-import CreateCabinForm from "./CreateCabinForm";
-import ConfirmDelete from "../../ui/ConfirmDelete";
+import Table from "../../ui/table/Table";
+import Modal from "../../ui/modal/Modal";
+import Menus from "../../ui/modal/Menus";
+// import CreateServiceForm from "./CreateServiceForm";
+import UpdateServiceForm from "./UpdateServiceForm";
+import ConfirmDelete from "../../ui/modal/ConfirmDelete";
 
-import { useDeleteCabin } from "./useDeleteCabin";
-import { formatCurrency } from "../../utils/helpers";
-import { useCreateCabin } from "./useCreateCabin";
+import { useDeleteService } from "./useDeleteService";
+import { useCreateService } from "./useCreateService";
 
 // const TableRow = styled.div`
 //     display: grid;
@@ -39,38 +39,39 @@ const Cabin = styled.div`
     font-family: "Sono";
 `;
 
-const Price = styled.div`
-    font-family: "Sono";
-    font-weight: 600;
-`;
+// const Price = styled.div`
+//     font-family: "Sono";
+//     font-weight: 600;
+// `;
 
-const Discount = styled.div`
-    font-family: "Sono";
-    font-weight: 500;
-    color: var(--color-green-700);
-`;
+// const Discount = styled.div`
+//     font-family: "Sono";
+//     font-weight: 500;
+//     color: var(--color-green-700);
+// `;
 
-function CabinRow({ cabin }) {
-    const { isDeleting, deleteCabin } = useDeleteCabin();
-    const { isCreating, createCabin } = useCreateCabin();
+function ServiceRow({ service }) {
+    const { isDeleting, deleteService } = useDeleteService();
+    const { isCreating, createService } = useCreateService();
+
     const {
-        id: cabinId,
-        name,
-        maxCapacity,
-        regularPrice,
-        discount,
-        description,
+        id: serviceId,
+        title,
         image,
-    } = cabin;
+        video,
+        summary,
+        email,
+        user_id,
+    } = service;
 
     function handleDeuplicate() {
-        createCabin({
-            name: `Capy of ${name}`,
-            maxCapacity,
-            regularPrice,
-            discount,
-            description,
+        createService({
+            title: `Capy of ${title}`,
             image,
+            video,
+            summary,
+            email,
+            user_id,
         });
     }
 
@@ -79,23 +80,25 @@ function CabinRow({ cabin }) {
             <Table.Row>
                 <Img src={image} />
 
-                <Cabin>{name}</Cabin>
+                <Cabin>{title}</Cabin>
 
-                <div>Fits up to {maxCapacity} guests</div>
+                <Img src={video} />
 
-                <Price>{formatCurrency(regularPrice)}</Price>
+                <div>{summary}</div>
 
-                {discount ? (
+                {/* <Price>{formatCurrency(regularPrice)}</Price> */}
+
+                {/* {discount ? (
                     <Discount>{formatCurrency(discount)}</Discount>
                 ) : (
                     <span>&mdash;</span>
-                )}
+                )} */}
 
                 <div>
                     <Modal>
                         <Menus.Menu>
-                            <Menus.Toggle id={cabinId} />
-                            <Menus.List id={cabinId}>
+                            <Menus.Toggle id={serviceId} />
+                            <Menus.List id={serviceId}>
                                 <Menus.Button
                                     icon={<HiSquare2Stack />}
                                     onClick={handleDeuplicate}
@@ -118,14 +121,14 @@ function CabinRow({ cabin }) {
                             </Menus.List>
 
                             <Modal.Window name="edit">
-                                <CreateCabinForm cabinToEdit={cabin} />
+                                <UpdateServiceForm serviceToEdit={service} />
                             </Modal.Window>
 
                             <Modal.Window name="delete">
                                 <ConfirmDelete
-                                    resourceName="cabins"
+                                    resourceName="services"
                                     disabled={isDeleting}
-                                    onConfirm={() => deleteCabin(cabinId)}
+                                    onConfirm={() => deleteService(serviceId)}
                                 />
                             </Modal.Window>
                         </Menus.Menu>
@@ -137,4 +140,4 @@ function CabinRow({ cabin }) {
     );
 }
 
-export default CabinRow;
+export default ServiceRow;
