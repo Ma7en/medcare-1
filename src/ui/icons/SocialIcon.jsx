@@ -8,7 +8,7 @@ import {
     FaTwitter,
 } from "react-icons/fa";
 
-function IconCom({ name }) {
+function SocialIcon({ name }) {
     console.log(`name:- `, name);
     return (
         <>
@@ -25,4 +25,4 @@ function IconCom({ name }) {
     );
 }
 
-export default IconCom;
+export default SocialIcon;

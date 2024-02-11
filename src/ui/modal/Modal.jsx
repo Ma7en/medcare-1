@@ -3,7 +3,7 @@
 import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 const Overlay = styled.div`
@@ -35,10 +35,26 @@ const StyledModal = styled.div`
     border: var(--border);
     box-shadow: var(--box-shadow);
     border-radius: 0.5rem;
+    ${(props) =>
+        props.type === "delete" &&
+        css`
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 80rem;
+            /* font-size: 3rem;
+            font-weight: 600; */
+        `}
     /* start max 767px */
     @media (max-width: 767px) {
         width: 100%;
         padding: 0;
+        ${(props) =>
+            props.type === "delete" &&
+            css`
+                width: 90%;
+                padding: 1.5rem 2rem;
+            `}
     }
 `;
 
@@ -132,7 +148,7 @@ function Window({ children, name }) {
 
     return createPortal(
         <Overlay>
-            <StyledModal ref={ref}>
+            <StyledModal ref={ref} type={openName === "delete" && "delete"}>
                 <Button onClick={close}>
                     <HiXMark />
                 </Button>

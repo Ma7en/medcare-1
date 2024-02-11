@@ -8,7 +8,7 @@ import {
     FaTwitter,
 } from "react-icons/fa";
 import Heading from "../global/Heading";
-import IconCom from "../icons/IconCom";
+// import IconCom from "../icons/IconCom";
 import { Link } from "react-router-dom";
 
 function DoctorCom({ doctor }) {

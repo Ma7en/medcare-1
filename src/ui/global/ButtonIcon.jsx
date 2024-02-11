@@ -9,6 +9,7 @@ const ButtonIcon = styled.button`
     border: var(--border);
     border-color: transparent;
     /* background-color: var(--back-box); */
+    color: var(--black);
 
     &:hover {
         /* background-color: var(--color-grey-100); */

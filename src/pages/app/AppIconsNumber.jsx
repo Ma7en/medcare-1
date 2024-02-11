@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import BlogTableOperations from "../../features/blogs/BlogTableOperations";
+// import BlogTableOperations from "../../features/blogs/BlogTableOperations";
 import Heading from "../../ui/global/Heading";
 import Row from "../../ui/global/Row";
 
@@ -9,7 +9,7 @@ function AppIconsNumber() {
         <>
             <Row type="horizontal">
                 <Heading as="h1">All IconsNumber</Heading>
-                <BlogTableOperations />
+                {/* <BlogTableOperations /> */}
             </Row>
 
             <Row>

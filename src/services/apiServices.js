@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import supabase, { supabaseUrl } from "./supabase";
 
 // Services
@@ -37,9 +36,12 @@ export async function createService(obj, id) {
             "/",
             "",
         );
-        const imagePath = hasImagePath
+        let imagePath = hasImagePath
             ? obj.image.src
             : `${supabaseUrl}/storage/v1/object/public/images/services/${imageName}`;
+        if (obj.image.src === undefined || obj.image.src === "") {
+            imagePath = "";
+        }
 
         //2) videoSrc
         const hasVideoPath = obj.video?.src?.startsWith?.(supabaseUrl);
@@ -47,9 +49,13 @@ export async function createService(obj, id) {
             "/",
             "",
         );
-        const videoPath = hasVideoPath
+        let videoPath = hasVideoPath
             ? obj.video.src
             : `${supabaseUrl}/storage/v1/object/public/images/services/${videoName}`;
+
+        if (obj.video.src === undefined || obj.video.src === "") {
+            videoPath = "";
+        }
 
         //3) videoTrack
         const hasTrackPath = obj.video?.track?.startsWith?.(supabaseUrl);
@@ -57,37 +63,42 @@ export async function createService(obj, id) {
             "/",
             "",
         );
-        const trackPath = hasTrackPath
+        let trackPath = hasTrackPath
             ? obj.video.track
             : `${supabaseUrl}/storage/v1/object/public/images/services/${trackName}`;
+
+        if (obj.video.track === undefined || obj.video.track === "") {
+            trackPath = "";
+        }
 
         //3)=============================
         // 1) create/edit service
         let query = supabase.from("services");
 
-        if (obj.image.src || obj.image.url || obj.video.src || obj.video.url) {
-            if (!id) {
-                query = query.insert([
-                    {
-                        ...obj,
-                        video: {
-                            ...obj.video,
-                            src: videoPath,
-                            track: trackPath,
-                        },
-                        image: { ...obj.image, src: imagePath },
+        // if (obj.image.src || obj.image.url || obj.video.src || obj.video.url) {
+
+        if (!id) {
+            query = query.insert([
+                {
+                    ...obj,
+                    video: {
+                        ...obj.video,
+                        src: videoPath,
+                        track: trackPath,
                     },
-                ]);
-            }
-        } else {
-            if (!id) {
-                query = query.insert([
-                    {
-                        ...obj,
-                    },
-                ]);
-            }
+                    image: { ...obj.image, src: imagePath },
+                },
+            ]);
         }
+        // } else {
+        //     if (!id) {
+        //         query = query.insert([
+        //             {
+        //                 ...obj,
+        //             },
+        //         ]);
+        //     }
+        // }
 
         const { data, error } = await query.select().single();
 
@@ -121,8 +132,10 @@ export async function createService(obj, id) {
     }
 }
 
+// export async function updateService(obj, id) {
 export async function updateService(obj, id) {
-    // console.log(`obj`, obj);
+    console.log(`obj`, obj);
+    // console.log(`obj`, typeof obj.image.src);
 
     try {
         //1)=============================
@@ -132,9 +145,13 @@ export async function updateService(obj, id) {
             "/",
             "",
         );
-        const imagePath = hasImagePath
+        let imagePath = hasImagePath
             ? obj.image.src
             : `${supabaseUrl}/storage/v1/object/public/images/services/${imageName}`;
+
+        if (obj.image.src === undefined || obj.image.src === "") {
+            imagePath = "";
+        }
 
         //2) videoSrc
         const hasVideoPath = obj.video?.src?.startsWith?.(supabaseUrl);
@@ -142,9 +159,13 @@ export async function updateService(obj, id) {
             "/",
             "",
         );
-        const videoPath = hasVideoPath
+        let videoPath = hasVideoPath
             ? obj.video.src
             : `${supabaseUrl}/storage/v1/object/public/images/services/${videoName}`;
+
+        if (obj.video.src === undefined || obj.video.src === "") {
+            videoPath = "";
+        }
 
         //3) videoTrack
         const hasTrackPath = obj.video?.track?.startsWith?.(supabaseUrl);
@@ -152,34 +173,70 @@ export async function updateService(obj, id) {
             "/",
             "",
         );
-        const trackPath = hasTrackPath
+        let trackPath = hasTrackPath
             ? obj.video.track
             : `${supabaseUrl}/storage/v1/object/public/images/services/${trackName}`;
 
-        // 2) ==================
-        // 1) create/edit service
-        let query = supabase.from("services");
-
-        // B) EDIT
-        if (id) {
-            query = query
-                .update({
-                    ...obj,
-                    video: { ...obj.video, src: videoPath, track: trackPath },
-                    image: { ...obj.image, src: imagePath },
-                })
-                .eq("id", id);
+        if (obj.video.track === undefined || obj.video.track === "") {
+            trackPath = "";
         }
 
-        const { data, error } = await query.select().single();
+        console.log(`-----obj---------`, obj);
 
+        // 2) ==================
+        // 1) create/edit service
+        // let query = supabase.from("services");
+        // // B) EDIT
+        // if (!id) {
+        //     query = query
+        //         .update({
+        //             ...obj,
+        //             video: { ...obj.video, src: videoPath, track: trackPath },
+        //             image: { ...obj.image, src: imagePath },
+        //         })
+        //         .eq("id", id);
+        // }
+        // const { data, error } = await query.select().single();
+        // console.log(`axx--`, query);
+        // const { data, error } = await query.select();
+        // if (error) {
+        //     console.error(error);
+        //     throw new Error("Services could not be Updated");
+        // }
+
+        // B) edit
+
+        if (!id) return null;
+        const { data, error } = await supabase
+            .from("services")
+            .update({
+                ...obj,
+                video: { ...obj.video, src: videoPath, track: trackPath },
+                image: { ...obj.image, src: imagePath },
+            })
+            .eq("id", id)
+            .select();
         if (error) {
             console.error(error);
             throw new Error("Services could not be Updated");
         }
 
+        console.log(`-x-x-`, hasImagePath);
+        console.log(
+            `-`,
+            !hasImagePath,
+            "-",
+            obj.image.src !== undefined,
+            "-",
+            obj.image.src === "",
+        );
+
         //3)  ==================
         // 1) upload image and video and track
+        // if (
+        //     !hasImagePath ||
+        //     obj.image.src !== undefined ||
+        //     obj.image.src === ""
         if (!hasImagePath) {
             await supabase.storage
                 .from("images/services")
@@ -199,7 +256,7 @@ export async function updateService(obj, id) {
         return data;
     } catch (error) {
         console.error(error);
-        throw new Error("Services could not be updated or uploaded");
+        throw new Error("Services could not be updated");
     }
 }
 

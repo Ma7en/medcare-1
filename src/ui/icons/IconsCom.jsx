@@ -1,6 +1,7 @@
 import { FaHospital, FaProcedures, FaUserMd, FaUsers } from "react-icons/fa";
 
 function IconsCom() {
+    // dataupdate, icon, number, title, username, emil, user_Id
     return (
         <>
             <section className="icons">
