@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useQuery } from "@tanstack/react-query";
-import { getServices } from "../../services/apiServices";
+import { getIconsNumber } from "../../services/apiIconsNumber";
 
 export function useServices() {
     const {
         isLoading,
-        data: services,
+        data: iconsnumber,
         error,
     } = useQuery({
-        queryKey: ["services"],
-        queryFn: getServices,
+        queryKey: ["iconsnumber"],
+        queryFn: getIconsNumber,
     });
 
-    return { isLoading, error, services };
+    return { isLoading, error, iconsnumber };
 }

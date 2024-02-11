@@ -18,12 +18,12 @@ import AddDesLine from "../../ui/form/AddDesLine";
 import { useCreateService } from "./useCreateService";
 import { useUser } from "../authentication/useUser";
 
-function CreateServiceForm({ onCloseModal }) {
+function CreateIconNumberForm({ onCloseModal }) {
     const { user } = useUser();
     const { id: userId, email: userEmail } = user;
     const { fullName, avatar } = user.user_metadata;
 
-    const { isCreating, createService } = useCreateService();
+    const { isCreating, createIconNumber } = useCreateIconNumber();
 
     const [desLine, setDesLine] = useState(6);
     const [errorDesLine, setErrorDesLine] = useState("");
@@ -303,4 +303,4 @@ function CreateServiceForm({ onCloseModal }) {
     );
 }
 
-export default CreateServiceForm;
+export default CreateIconNumberForm;

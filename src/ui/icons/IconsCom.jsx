@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { FaHospital, FaProcedures, FaUserMd, FaUsers } from "react-icons/fa";
 
 function IconsCom() {
@@ -7,32 +8,34 @@ function IconsCom() {
             <section className="icons">
                 <div className="container">
                     <div className="icon-cont">
-                        {/* <i className="fas fa-user-md" /> */}
                         <FaUserMd />
                         <h3>140+</h3>
                         <p>doctors at work</p>
                     </div>
 
-                    <div className="icon-cont">
-                        {/* <i className="fas fa-users" /> */}
+                    {/* <div className="icon-cont"> 
+                        <FaUserMd />
+                        <h3>140+</h3>
+                        <p>doctors at work</p>
+                    </div>
+
+                    <div className="icon-cont"> 
                         <FaUsers />
                         <h3>1040+</h3>
                         <p>satisfied patients</p>
                     </div>
 
-                    <div className="icon-cont">
-                        {/* <i className="fas fa-procedures" /> */}
+                    <div className="icon-cont"> 
                         <FaProcedures />
                         <h3>500+</h3>
                         <p>bed facility</p>
                     </div>
 
-                    <div className="icon-cont">
-                        {/* <i className="fas fa-hospital" /> */}
+                    <div className="icon-cont"> 
                         <FaHospital />
                         <h3>80+</h3>
                         <p>available hospitals</p>
-                    </div>
+                    </div> */}
                 </div>
             </section>
             <div className="spikes" />

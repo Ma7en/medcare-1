@@ -3,21 +3,21 @@
 
 import Button from "../../ui/global/Button";
 import Modal from "../../ui/modal/Modal";
-import CreateServiceForm from "./CreateServiceForm";
+import CreateIconNumberForm from "./CreateIconNumberForm";
 
-function AddService() {
+function AddIconNumber() {
     return (
         <>
             <div>
                 <Modal>
-                    <Modal.Open opens="service-form">
+                    <Modal.Open opens="iconnumber-form">
                         <Button style={{ margin: "2rem 0rem" }}>
-                            Add new Service
+                            Add new Service Number
                         </Button>
                     </Modal.Open>
 
-                    <Modal.Window name="service-form">
-                        <CreateServiceForm />
+                    <Modal.Window name="iconnumber-form">
+                        <CreateIconNumberForm />
                     </Modal.Window>
                 </Modal>
             </div>
@@ -25,4 +25,4 @@ function AddService() {
     );
 }
 
-export default AddService;
+export default AddIconNumber;

@@ -1,10 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+
 import { useUser } from "../authentication/useUser";
 import { useUpdateService } from "./useUpdateService";
-import { useEffect, useState } from "react";
+
 import Spinner from "../../ui/spinner/Spinner";
 import Form from "../../ui/form/Form";
 import FormRowVertical from "../../ui/form/FormRowVertical";
@@ -17,27 +19,6 @@ import Or from "../../ui/form/Or";
 import FormRow from "../../ui/form/FormRow";
 import Button from "../../ui/global/Button";
 import AddDesLine from "../../ui/form/AddDesLine";
-
-// import { useEffect } from "react";
-// import { useForm } from "react-hook-form";
-
-// import AboutCreated from "../../ui/about/AboutCreated";
-// import Form from "../../ui/form/Form";
-// import FormRow from "../../ui/form/FormRow";
-// import FormRowVertical from "../../ui/form/FormRowVertical";
-// import DevSrc from "../../ui/form/DevSrc";
-// import Input from "../../ui/form/Input";
-// import Textarea from "../../ui/form/Textarea";
-// import FileInput from "../../ui/form/FileInput";
-// import Button from "../../ui/global/Button";
-// import Label from "../../ui/form/Label";
-// import Spinner from "../../ui/spinner/Spinner";
-
-// import { useUpdateAboutUs } from "./useUpdateAboutUs";
-// import { useUser } from "../authentication/useUser";
-// import Or from "../../ui/form/Or";
-
-// import { useAboutUs } from "./useAboutUs";
 
 function UpdateServiceForm({ service, onCloseModal }) {
     const { user } = useUser();
@@ -64,8 +45,6 @@ function UpdateServiceForm({ service, onCloseModal }) {
             defaultValues: editService,
         });
     const { errors } = formState;
-
-    // console.log(`d------`, service);
 
     useEffect(() => {
         const updateAboutData = async () => {

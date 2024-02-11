@@ -13,9 +13,9 @@ function AppIconsNumber() {
             </Row>
 
             <Row>
-                {/* <BlogTable /> */}
+                {/* <IconNumberTable /> */}
 
-                {/* <AddBlog /> */}
+                {/* <AddIconNumber /> */}
             </Row>
         </>
     );
