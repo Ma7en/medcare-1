@@ -1,15 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { useSearchParams } from "react-router-dom";
 
-import { useServices } from "./useServices";
-
 import Spinner from "../../ui/spinner/Spinner";
 import Empty from "../../ui/error/Empty";
 
 import Menus from "../../ui/modal/Menus";
 import Table from "../../ui/table/Table";
-import ServiceRow from "./ServiceRow";
 import Pagination from "../../ui/pfs/Pagination";
+import IconNumberRow from "./IconNumberRow";
+import { useIconsNumber } from "./useIconsNumber";
 
 // const TableHeader = styled.header`
 //     display: grid;
@@ -25,13 +24,13 @@ import Pagination from "../../ui/pfs/Pagination";
 //     padding: 1.6rem 2.4rem;
 // `;
 
-function ServiceTable() {
+function IconNumberTable() {
     const count = 10;
-    const { isLoading, services } = useServices();
+    const { isLoading, iconsnumber } = useIconsNumber();
     const [searchParams] = useSearchParams();
 
     if (isLoading) return <Spinner />;
-    if (!services.length) return <Empty resourceName="services" />;
+    if (!iconsnumber.length) return <Empty resourceName="services number" />;
 
     // // 1) filter
     // const filterValue = searchParams.get("discount") || "all";
@@ -47,29 +46,31 @@ function ServiceTable() {
     const sortBy = searchParams.get("sortBy") || "startDate-asc";
     const [field, direction] = sortBy.split("-");
     const modifier = direction === "asc" ? 1 : -1;
-    const sortedServices = services.sort(
+    const sortedIconsNumber = iconsnumber.sort(
         (a, b) => (a[field] - b[field]) * modifier,
     );
 
     return (
         <>
             <Menus>
-                <Table columns="0.6fr 0.6fr 1fr 2fr .6fr 0.2fr">
+                <Table columns="1.2fr 2.8fr 1fr 1fr .6fr">
                     <Table.Header>
-                        <div>images</div>
-                        <div>video</div>
+                        <div>icon</div>
                         <div>title</div>
-                        <div>summary</div>
-                        <div>admin</div>
+                        <div>number</div>
+                        <div>UserName</div>
                         <div></div>
                     </Table.Header>
 
                     <Table.Body
                         // data={cabins}
                         // data={filteredServices}
-                        data={sortedServices}
-                        render={(service) => (
-                            <ServiceRow service={service} key={service.id} />
+                        data={sortedIconsNumber}
+                        render={(iconnumber) => (
+                            <IconNumberRow
+                                iconnumber={iconnumber}
+                                key={iconnumber.id}
+                            />
                         )}
                     />
 
@@ -86,4 +87,4 @@ function ServiceTable() {
     );
 }
 
-export default ServiceTable;
+export default IconNumberTable;

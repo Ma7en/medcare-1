@@ -1,14 +1,15 @@
 /* eslint-disable no-unused-vars */
 import { useSearchParams } from "react-router-dom";
 
-import { useServices } from "./useServices";
+import { useBlogs } from "./useBlogs";
 
 import Spinner from "../../ui/spinner/Spinner";
 import Empty from "../../ui/error/Empty";
 
 import Menus from "../../ui/modal/Menus";
 import Table from "../../ui/table/Table";
-import ServiceRow from "./ServiceRow";
+import BlogRow from "./BlogRow";
+import Pagination from "../../ui/pfs/Pagination";
 
 // const TableHeader = styled.header`
 //     display: grid;
@@ -24,13 +25,13 @@ import ServiceRow from "./ServiceRow";
 //     padding: 1.6rem 2.4rem;
 // `;
 
-function ServiceTable() {
-    // const { isLoading, cabins } = uesServices();
-    const { isLoading, services } = useServices();
-    // const [searchParams] = useSearchParams();
+function BlogTable() {
+    const count = 10;
+    const { isLoading, blogs } = useBlogs();
+    const [searchParams] = useSearchParams();
 
     if (isLoading) return <Spinner />;
-    if (!services.length) return <Empty resourceName="services" />;
+    if (!blogs.length) return <Empty resourceName="blogs" />;
 
     // // 1) filter
     // const filterValue = searchParams.get("discount") || "all";
@@ -42,35 +43,36 @@ function ServiceTable() {
     // if (filterValue === "with-discount")
     //     filteredServices = services.filter((cabin) => cabin.discount > 0);
 
-    // // 2) sort
-    // const sortBy = searchParams.get("sortBy") || "startDate-asc";
-    // const [field, direction] = sortBy.split("-");
-    // const modifier = direction === "asc" ? 1 : -1;
-    // const sortedServices = filteredServices.sort(
-    //     (a, b) => (a[field] - b[field]) * modifier,
-    // );
+    // 2) sort
+    const sortBy = searchParams.get("sortBy") || "startDate-asc";
+    const [field, direction] = sortBy.split("-");
+    const modifier = direction === "asc" ? 1 : -1;
+    const sortedBlogs = blogs.sort((a, b) => (a[field] - b[field]) * modifier);
 
     return (
         <>
             <Menus>
-                <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
+                <Table columns="0.6fr 0.6fr 2fr .6fr .6fr 0.2fr">
                     <Table.Header>
-                        <div>title</div>
                         <div>images</div>
-                        <div>video</div>
+                        <div>title</div>
                         <div>summary</div>
-                        <div>user</div>
+                        <div>data</div>
+                        <div>admin</div>
                         <div></div>
                     </Table.Header>
 
                     <Table.Body
                         // data={cabins}
                         // data={filteredServices}
-                        // data={sortedServices}
-                        render={(service) => (
-                            <ServiceRow service={service} key={service.id} />
-                        )}
+                        data={sortedBlogs}
+                        render={(blog) => <BlogRow blog={blog} key={blog.id} />}
                     />
+
+                    <Table.Footer>
+                        <Pagination count={count} />
+                        {/* <Pagination /> */}
+                    </Table.Footer>
                     {/* {cabins.map((cabin) => (
                         <CabinRow cabin={cabin} key={cabin.id} />
                     ))} */}
@@ -80,4 +82,4 @@ function ServiceTable() {
     );
 }
 
-export default ServiceTable;
+export default BlogTable;

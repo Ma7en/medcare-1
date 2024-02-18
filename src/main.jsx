@@ -6,6 +6,7 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import App from "./App.jsx";
 import ErrorFallback from "./ui/error/ErrorFallback.jsx";
+// import App from "./components/2/App.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
@@ -14,6 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             onReset={() => window.location.replace("/")}
         > */}
         <App />
+
         {/* </ErrorBoundary> */}
     </React.StrictMode>,
 );

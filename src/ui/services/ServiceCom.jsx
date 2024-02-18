@@ -21,14 +21,14 @@ function ServiceCom({ service }) {
     return (
         <>
             <div className="box">
+                {icon === "FaUserMd" && <FaUserMd />}
                 {icon === "FaNotesMedical" && <FaNotesMedical />}
                 {icon === "FaAmbulance" && <FaAmbulance />}
-                {icon === "FaUserMd" && <FaUserMd />}
                 {icon === "FaPills" && <FaPills />}
                 {icon === "FaProcedures" && <FaProcedures />}
                 {icon === "FaHeartbeat" && <FaHeartbeat />}
 
-                {icon === "" || icon === undefined || (icon && <FaUserMd />)}
+                {/* {icon === "" || icon === undefined || (icon && <FaUserMd />)} */}
 
                 <Heading as="h5">{title}</Heading>
                 <p>{summary}</p>

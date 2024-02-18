@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+
 import Form from "../../ui/form/Form";
 import FormRow from "../../ui/form/FormRow";
 import Input from "../../ui/form/Input";
@@ -12,36 +13,50 @@ import FormRowVertical from "../../ui/form/FormRowVertical";
 import DevSrc from "../../ui/form/DevSrc";
 import Label from "../../ui/form/Label";
 import Or from "../../ui/form/Or";
+import AddDesLine from "../../ui/form/AddDesLine";
 
-import { useCreateService } from "./useCreateService";
+import { useCreateBlog } from "./useCreateBlog";
 import { useUser } from "../authentication/useUser";
 
-function CreateServiceForm({ onCloseModal }) {
+function CreateBlogForm({ onCloseModal }) {
     const { user } = useUser();
     const { id: userId, email: userEmail } = user;
     const { fullName, avatar } = user.user_metadata;
 
-    const { isCreating, createService } = useCreateService();
-    // const { isUpdating, updateService } = useUpdateService();
+    const { isCreating, createBlog } = useCreateBlog();
 
-    // const isWorking = isCreating || isUpdating;
+    const [desLine, setDesLine] = useState(6);
+    const [errorDesLine, setErrorDesLine] = useState("");
 
-    // const { id: editId, ...editValues } = cabinToEdit;
-    // const isEditSession = Boolean(editId);
-
-    // console.log(`Boolean:- `, Boolean(editId), editId);
-
-    const { register, handleSubmit, reset, getValues, formState } = useForm({});
+    const { register, handleSubmit, reset, getValues, setValue, formState } =
+        useForm({});
     const { errors } = formState;
 
-    function onSubmit(data) {
-        // const image =
-        //     typeof data.image === "string" ? data.image : data.image[0];
+    useEffect(() => {
+        const setData = async () => {
+            try {
+                setValue("icon", "FaUserMd");
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        setData();
+    }, [setValue]);
 
+    function HandleAddDesLine() {
+        const numberOfLines = Object.keys(getValues().description).length;
+        if (getValues().description[`line${numberOfLines - 1}`]) {
+            setDesLine(desLine + 1);
+        } else {
+            setErrorDesLine("Please fill out these fields");
+        }
+    }
+
+    function onSubmit(data) {
         let imageSrc =
             data.image && data.image.src ? data.image.src[0] : data.image.src;
-        // typeof data.image === "string" ? data?.image : data?.image?.src[0];
-        let ImageE = {
+        let ImageE;
+        ImageE = {
             ...data.image,
             src: imageSrc,
         };
@@ -58,14 +73,14 @@ function CreateServiceForm({ onCloseModal }) {
             track: videoTrack,
         };
 
-        createService(
+        createBlog(
             {
                 ...data,
                 image: { ...ImageE },
                 video: { ...videoE },
                 email: userEmail,
                 user_id: userId,
-                nameuser: fullName,
+                username: fullName,
             },
             {
                 onSuccess: (data) => {
@@ -85,10 +100,7 @@ function CreateServiceForm({ onCloseModal }) {
             onSubmit={handleSubmit(onSubmit, onError)}
             type={onCloseModal ? "modal" : "regular"}
         >
-            <FormRowVertical
-                label="Service title"
-                error={errors?.title?.message}
-            >
+            <FormRowVertical label="Blog title" error={errors?.title?.message}>
                 <Input
                     type="text"
                     id="title"
@@ -99,7 +111,7 @@ function CreateServiceForm({ onCloseModal }) {
                 />
             </FormRowVertical>
 
-            <FormRowVertical label="Service icon" error={errors?.icon?.message}>
+            <FormRowVertical label="Blog icon" error={errors?.icon?.message}>
                 <Input
                     type="text"
                     id="icon"
@@ -111,7 +123,7 @@ function CreateServiceForm({ onCloseModal }) {
             </FormRowVertical>
 
             <FormRowVertical
-                label="summary for Service"
+                label="summary for Blog"
                 error={errors?.summary?.message}
             >
                 <Textarea
@@ -125,24 +137,11 @@ function CreateServiceForm({ onCloseModal }) {
             </FormRowVertical>
 
             <FormRowVertical
-                label="Description for Service"
+                label="Description for Blog"
                 error={errors?.description?.message}
             >
                 <>
-                    {/* {Object.keys(description).map((des) => (
-                        <Input
-                            key={des}
-                            type="text"
-                            id={`description.${des}`}
-                            disabled={isCreating}
-                            {...register(`description.${des}`, {
-                                // required: "This field is required",
-                            })}
-                        />
-                    ))} */}
-                    {Array.from({ length: 6 }, (_, i) => (
-                        // <p key={i}>{i}</p>
-                        // <input type="text" key={i} />
+                    {Array.from({ length: desLine }, (_, i) => (
                         <Input
                             key={i}
                             type="text"
@@ -153,13 +152,15 @@ function CreateServiceForm({ onCloseModal }) {
                             })}
                         />
                     ))}
+                    <AddDesLine
+                        fn={HandleAddDesLine}
+                        text="Add Input"
+                        error={errorDesLine}
+                    />
                 </>
             </FormRowVertical>
 
-            <FormRowVertical
-                label="Service video"
-                error={errors?.video?.message}
-            >
+            <FormRowVertical label="Blog video" error={errors?.video?.message}>
                 <>
                     <DevSrc>
                         <Label type="3" htmlFor="video">
@@ -211,10 +212,7 @@ function CreateServiceForm({ onCloseModal }) {
                 </>
             </FormRowVertical>
 
-            <FormRowVertical
-                label="Service photo"
-                error={errors?.image?.message}
-            >
+            <FormRowVertical label="Blog photo" error={errors?.image?.message}>
                 <>
                     <DevSrc>
                         <Label type="3" htmlFor="image">
@@ -296,4 +294,4 @@ function CreateServiceForm({ onCloseModal }) {
     );
 }
 
-export default CreateServiceForm;
+export default CreateBlogForm;

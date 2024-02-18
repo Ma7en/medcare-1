@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getIconsNumber } from "../../services/apiIconsNumber";
 
-export function useServices() {
+export function useIconsNumber() {
     const {
         isLoading,
         data: iconsnumber,

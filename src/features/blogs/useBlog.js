@@ -1,19 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { getService } from "../../services/apiServices";
+import { getBlog } from "../../services/apiBlogs";
 
-export function useService() {
-    const { serviceId } = useParams();
+export function useBlog() {
+    const { blogId } = useParams();
 
     const {
         isLoading,
-        data: service,
+        data: blog,
         error,
     } = useQuery({
-        queryKey: ["service", serviceId],
-        queryFn: () => getService(serviceId),
+        queryKey: ["blog", blogId],
+        queryFn: () => getBlog(blogId),
         retry: false,
     });
 
-    return { isLoading, error, service };
+    return { isLoading, error, blog };
 }

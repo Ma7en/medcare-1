@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { createService as createServiceApi } from "../../services/apiServices";
+import { createBlog as createBlogApi } from "../../services/apiBlogs";
 
-export function useCreateService() {
+export function useCreateBlog() {
     const queryClient = useQueryClient();
 
-    const { mutate: createService, isLoading: isCreating } = useMutation({
-        mutationFn: createServiceApi,
+    const { mutate: createBlog, isLoading: isCreating } = useMutation({
+        mutationFn: createBlogApi,
         onSuccess: () => {
-            toast.success("New Service Succesfully Created");
-            queryClient.invalidateQueries({ queryKey: ["services"] });
+            toast.success("New Blog Succesfully Created");
+            queryClient.invalidateQueries({ queryKey: ["blogs"] });
         },
         onError: (error) => toast.error(error.message),
     });
 
-    return { isCreating, createService };
+    return { isCreating, createBlog };
 }

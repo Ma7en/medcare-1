@@ -6,13 +6,12 @@ import { HiEye, HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import Table from "../../ui/table/Table";
 import Modal from "../../ui/modal/Modal";
 import Menus from "../../ui/modal/Menus";
-// import CreateServiceForm from "./CreateServiceForm";
-import UpdateServiceForm from "./UpdateServiceForm";
 import ConfirmDelete from "../../ui/modal/ConfirmDelete";
 
-import { useDeleteService } from "./useDeleteService";
-import { useCreateService } from "./useCreateService";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useDeleteIconNumber } from "./useDeleteIconNumber";
+import { useCreateIconNumber } from "./useCreateIconNumber";
+import UpdateIconNumberForm from "./UpdateIconNumberForm";
 
 // const TableRow = styled.div`
 //     display: grid;
@@ -66,35 +65,28 @@ const Cabin = styled.div`
 //     color: var(--color-green-700);
 // `;
 
-function ServiceRow({ service }) {
+function IconNumberRow({ iconnumber }) {
     const navigate = useNavigate();
-    const { isDeleting, deleteService } = useDeleteService();
-    const { isCreating, createService } = useCreateService();
+    const { isDeleting, deleteIconNumber } = useDeleteIconNumber();
+    const { isCreating, createIconNumber } = useCreateIconNumber();
 
     const {
-        id: serviceId,
+        id: iconnumberId,
         dataupdate,
-        description,
         title,
         icon,
-        image,
-        video,
-        summary,
+        number,
         email,
         user_id,
         username,
-    } = service;
+    } = iconnumber;
 
     function handleDeuplicate() {
-        createService({
-            // dataupdate: new Date().toISOString(),
+        createIconNumber({
             title: `Capy of ${title}`,
-            summary,
-            description,
-            dataupdate,
             icon,
-            image,
-            video,
+            number,
+            dataupdate,
             email,
             user_id,
             username,
@@ -110,7 +102,7 @@ function ServiceRow({ service }) {
         <>
             <Table.Row>
                 {/* <Img src={image.src} alt={image.alt} /> */}
-                <Img
+                {/* <Img
                     src={
                         image.url ||
                         image.src ||
@@ -120,12 +112,14 @@ function ServiceRow({ service }) {
 
                 <Video
                     src={video.url || video.src || "/vidoes/neurorons.mp4"}
-                />
+                /> */}
+
+                <div>{icon}</div>
 
                 <Cabin>{title}</Cabin>
 
                 <div>
-                    <p>{summary}</p>
+                    <p>{number}</p>
                 </div>
 
                 <div>{username}</div>
@@ -141,11 +135,19 @@ function ServiceRow({ service }) {
                 <div>
                     <Modal>
                         <Menus.Menu>
-                            <Menus.Toggle id={serviceId} />
-                            <Menus.List id={serviceId}>
-                                <Link
+                            <Menus.Toggle id={iconnumberId} />
+                            <Menus.List id={iconnumberId}>
+                                {/* <Link
                                     target="_blank"
-                                    to={`${document.location.origin}/services/${serviceId}`}
+                                    to={`${document.location.origin}/home#iconsnumber`}
+                                    onClick={() => {
+                                        const targetSection =
+                                            document.getElementById(
+                                                "iconsnumber",
+                                            );
+                                        if (targetSection)
+                                            targetSection.scrollIntoView();
+                                    }}
                                 >
                                     <Menus.Button
                                         icon={<HiEye />}
@@ -154,7 +156,7 @@ function ServiceRow({ service }) {
                                     >
                                         View
                                     </Menus.Button>
-                                </Link>
+                                </Link> */}
 
                                 <Menus.Button
                                     icon={<HiSquare2Stack />}
@@ -178,14 +180,16 @@ function ServiceRow({ service }) {
                             </Menus.List>
 
                             <Modal.Window name="edit">
-                                <UpdateServiceForm service={service} />
+                                <UpdateIconNumberForm iconnumber={iconnumber} />
                             </Modal.Window>
 
                             <Modal.Window name="delete">
                                 <ConfirmDelete
-                                    resourceName="services"
+                                    resourceName="services number"
                                     disabled={isDeleting}
-                                    onConfirm={() => deleteService(serviceId)}
+                                    onConfirm={() =>
+                                        deleteIconNumber(iconnumberId)
+                                    }
                                 />
                             </Modal.Window>
                         </Menus.Menu>
@@ -197,4 +201,4 @@ function ServiceRow({ service }) {
     );
 }
 
-export default ServiceRow;
+export default IconNumberRow;

@@ -36,9 +36,12 @@ export async function createBlog(obj, id) {
             "/",
             "",
         );
-        const imagePath = hasImagePath
+        let imagePath = hasImagePath
             ? obj.image.src
             : `${supabaseUrl}/storage/v1/object/public/images/blogs/${imageName}`;
+        if (obj.image.src === undefined || obj.image.src === "") {
+            imagePath = "";
+        }
 
         //2) videoSrc
         const hasVideoPath = obj.video?.src?.startsWith?.(supabaseUrl);
@@ -46,9 +49,12 @@ export async function createBlog(obj, id) {
             "/",
             "",
         );
-        const videoPath = hasVideoPath
+        let videoPath = hasVideoPath
             ? obj.video.src
             : `${supabaseUrl}/storage/v1/object/public/images/blogs/${videoName}`;
+        if (obj.video.src === undefined || obj.video.src === "") {
+            videoPath = "";
+        }
 
         //3) videoTrack
         const hasTrackPath = obj.video?.track?.startsWith?.(supabaseUrl);
@@ -56,9 +62,13 @@ export async function createBlog(obj, id) {
             "/",
             "",
         );
-        const trackPath = hasTrackPath
+        let trackPath = hasTrackPath
             ? obj.video.track
             : `${supabaseUrl}/storage/v1/object/public/images/blogs/${trackName}`;
+
+        if (obj.video.track === undefined || obj.video.track === "") {
+            trackPath = "";
+        }
 
         //3)=============================
         // 1) create/edit service
@@ -77,7 +87,7 @@ export async function createBlog(obj, id) {
 
         if (error) {
             console.error(error);
-            throw new Error("Services could not be Updated");
+            throw new Error("Blog could not be Updated");
         }
 
         //3)=============================
@@ -101,7 +111,7 @@ export async function createBlog(obj, id) {
         return data;
     } catch (error) {
         console.error(error);
-        throw new Error("Services could not be updated or uploaded");
+        throw new Error("Blog could not be updated or uploaded");
     }
 
     // const { data, error } = await supabase
@@ -125,19 +135,26 @@ export async function updateBlog(obj, id) {
             "/",
             "",
         );
-        const imagePath = hasImagePath
+        let imagePath = hasImagePath
             ? obj.image.src
             : `${supabaseUrl}/storage/v1/object/public/images/blogs/${imageName}`;
 
+        if (obj.image.src === undefined || obj.image.src === "") {
+            imagePath = "";
+        }
         //2) videoSrc
         const hasVideoPath = obj.video?.src?.startsWith?.(supabaseUrl);
         const videoName = `${Date.now()}-${obj.video?.src?.name}`.replaceAll(
             "/",
             "",
         );
-        const videoPath = hasVideoPath
+        let videoPath = hasVideoPath
             ? obj.video.src
             : `${supabaseUrl}/storage/v1/object/public/images/blogs/${videoName}`;
+
+        if (obj.video.src === undefined || obj.video.src === "") {
+            videoPath = "";
+        }
 
         //3) videoTrack
         const hasTrackPath = obj.video?.track?.startsWith?.(supabaseUrl);
@@ -145,27 +162,45 @@ export async function updateBlog(obj, id) {
             "/",
             "",
         );
-        const trackPath = hasTrackPath
+        let trackPath = hasTrackPath
             ? obj.video.track
             : `${supabaseUrl}/storage/v1/object/public/images/blogs/${trackName}`;
 
-        // 2) ==================
-        // 1) create/edit service
-        let query = supabase.from("blogs");
-
-        // B) EDIT
-        if (id) {
-            query = query
-                .update({
-                    ...obj,
-                    video: { ...obj.video, src: videoPath, track: trackPath },
-                    image: { ...obj.image, src: imagePath },
-                })
-                .eq("id", id);
+        if (obj.video.track === undefined || obj.video.track === "") {
+            trackPath = "";
         }
 
-        const { data, error } = await query.select().single();
+        // // 2) ==================
+        // // 1) create/edit service
+        // let query = supabase.from("blogs");
+        // // B) EDIT
+        // if (id) {
+        //     query = query
+        //         .update({
+        //             ...obj,
+        //             video: { ...obj.video, src: videoPath, track: trackPath },
+        //             image: { ...obj.image, src: imagePath },
+        //         })
+        //         .eq("id", id);
+        // }
+        // const { data, error } = await query.select().single();
+        // if (error) {
+        //     console.error(error);
+        //     throw new Error("Blogs could not be Updated");
+        // }
 
+        // B) edit
+
+        if (!id) return null;
+        const { data, error } = await supabase
+            .from("blogs")
+            .update({
+                ...obj,
+                video: { ...obj.video, src: videoPath, track: trackPath },
+                image: { ...obj.image, src: imagePath },
+            })
+            .eq("id", id)
+            .select();
         if (error) {
             console.error(error);
             throw new Error("Blogs could not be Updated");

@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 
 // import BlogTableOperations from "../../features/blogs/BlogTableOperations";
-import Heading from "../../ui/global/Heading";
 import Row from "../../ui/global/Row";
+import Heading from "../../ui/global/Heading";
+import AddIconNumber from "../../features/iconsnumber/AddIconNumber";
+import IconNumberTable from "../../features/iconsnumber/IconNumberTable";
 
 function AppIconsNumber() {
     return (
@@ -13,9 +15,9 @@ function AppIconsNumber() {
             </Row>
 
             <Row>
-                {/* <IconNumberTable /> */}
+                <IconNumberTable />
 
-                {/* <AddIconNumber /> */}
+                <AddIconNumber />
             </Row>
         </>
     );
@@ -30,8 +32,7 @@ export default AppIconsNumber;
     //     getCabins().then((data) => console.log(data));
     // }, []);
     /* <img
-        // src="https://dclaevazetcjjkrzczpc.supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg"
-        src="https://qxnddsjybxitlfnsokfe.supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg"
+   
         alt=""
     /> */
 }

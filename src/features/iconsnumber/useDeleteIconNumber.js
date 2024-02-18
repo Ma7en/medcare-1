@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { deleteIconNumber as deleteIconNumberApi } from "../../services/apiIconsNumber";
 
-export function useDeleteService() {
+export function useDeleteIconNumber() {
     const queryClient = useQueryClient();
 
     const { isLoading: isDeleting, mutate: deleteIconNumber } = useMutation({

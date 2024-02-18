@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getIconNumber } from "../../services/apiIconsNumber";
 
-export function useService() {
+export function useIconNumber() {
     const { iconnumberId } = useParams();
 
     const {

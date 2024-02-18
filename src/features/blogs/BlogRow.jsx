@@ -1,16 +1,17 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
-import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
+import { HiEye, HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 
 import Table from "../../ui/table/Table";
 import Modal from "../../ui/modal/Modal";
 import Menus from "../../ui/modal/Menus";
-// import CreateServiceForm from "./CreateServiceForm";
-import UpdateServiceForm from "./UpdateServiceForm";
+import UpdateBlogForm from "./UpdateBlogForm";
 import ConfirmDelete from "../../ui/modal/ConfirmDelete";
 
-import { useDeleteService } from "./useDeleteService";
-import { useCreateService } from "./useCreateService";
+import { useDeleteBlog } from "./useDeleteBlog";
+import { useCreateBlog } from "./useCreateBlog";
+import { Link, useNavigate } from "react-router-dom";
 
 // const TableRow = styled.div`
 //     display: grid;
@@ -24,12 +25,26 @@ import { useCreateService } from "./useCreateService";
 // `;
 
 const Img = styled.img`
-    display: block;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* display: block;
     width: 6.4rem;
     aspect-ratio: 3 / 2;
     object-fit: cover;
     object-position: center;
-    transform: scale(1.5) translateX(-7px);
+    transform: scale(1.5) translateX(-7px); */
+    border-radius: var(--border-radius-tiny);
+`;
+
+const Video = styled.video`
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 const Cabin = styled.div`
@@ -50,41 +65,69 @@ const Cabin = styled.div`
 //     color: var(--color-green-700);
 // `;
 
-function ServiceRow({ service }) {
-    const { isDeleting, deleteService } = useDeleteService();
-    const { isCreating, createService } = useCreateService();
+function BlogRow({ blog }) {
+    const navigate = useNavigate();
+    const { isDeleting, deleteBlog } = useDeleteBlog();
+    const { isCreating, createBlog } = useCreateBlog();
 
     const {
-        id: serviceId,
+        id: blogId,
+        dataupdate,
+        description,
         title,
+        icon,
         image,
         video,
         summary,
         email,
         user_id,
-    } = service;
+        username,
+    } = blog;
 
     function handleDeuplicate() {
-        createService({
+        createBlog({
+            // dataupdate: new Date().toISOString(),
             title: `Capy of ${title}`,
+            summary,
+            description,
+            dataupdate,
+            icon,
             image,
             video,
-            summary,
             email,
             user_id,
+            username,
         });
     }
+
+    // function handleView() {
+    //     navigate(`${document.location.origin}/services/${serviceId}`);
+    //     // {`${document.location.origin}/aboutus`}
+    // }
 
     return (
         <>
             <Table.Row>
-                <Img src={image} />
+                {/* <Img src={image.src} alt={image.alt} /> */}
+                <Img
+                    src={image.url || image.src || "/images/blogs/blog-1.jpg"}
+                />
+
+                {/* <Video
+                    src={video.url || video.src || "/vidoes/neurorons.mp4"}
+                /> */}
 
                 <Cabin>{title}</Cabin>
 
-                <Img src={video} />
+                <div>
+                    <p>{summary}</p>
+                </div>
 
-                <div>{summary}</div>
+                <div>
+                    <p>{dataupdate}</p>
+                </div>
+
+                <div>{username}</div>
 
                 {/* <Price>{formatCurrency(regularPrice)}</Price> */}
 
@@ -97,8 +140,21 @@ function ServiceRow({ service }) {
                 <div>
                     <Modal>
                         <Menus.Menu>
-                            <Menus.Toggle id={serviceId} />
-                            <Menus.List id={serviceId}>
+                            <Menus.Toggle id={blogId} />
+                            <Menus.List id={blogId}>
+                                <Link
+                                    target="_blank"
+                                    to={`${document.location.origin}/services/${blogId}`}
+                                >
+                                    <Menus.Button
+                                        icon={<HiEye />}
+                                        // onClick={handleView}
+                                        disabled={isCreating}
+                                    >
+                                        View
+                                    </Menus.Button>
+                                </Link>
+
                                 <Menus.Button
                                     icon={<HiSquare2Stack />}
                                     onClick={handleDeuplicate}
@@ -121,14 +177,14 @@ function ServiceRow({ service }) {
                             </Menus.List>
 
                             <Modal.Window name="edit">
-                                <UpdateServiceForm serviceToEdit={service} />
+                                <UpdateBlogForm blog={blog} />
                             </Modal.Window>
 
                             <Modal.Window name="delete">
                                 <ConfirmDelete
-                                    resourceName="services"
+                                    resourceName="blogs"
                                     disabled={isDeleting}
-                                    onConfirm={() => deleteService(serviceId)}
+                                    onConfirm={() => deleteBlog(blogId)}
                                 />
                             </Modal.Window>
                         </Menus.Menu>
@@ -140,4 +196,4 @@ function ServiceRow({ service }) {
     );
 }
 
-export default ServiceRow;
+export default BlogRow;

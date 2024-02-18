@@ -1,7 +1,7 @@
 import SortBy from "../../ui/pfs/SortBy";
 import TableOperations from "../../ui/table/TableOperations";
 
-function ServiceTableOperations() {
+function IconNumberTableOperations() {
     return (
         <>
             <TableOperations>
@@ -41,4 +41,4 @@ function ServiceTableOperations() {
     );
 }
 
-export default ServiceTableOperations;
+export default IconNumberTableOperations;

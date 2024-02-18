@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useQuery } from "@tanstack/react-query";
-import { getServices } from "../../services/apiServices";
+import { getBlogs } from "../../services/apiBlogs";
 
-export function useServices() {
+export function useBlogs() {
     const {
         isLoading,
-        data: services,
+        data: blogs,
         error,
     } = useQuery({
-        queryKey: ["services"],
-        queryFn: getServices,
+        queryKey: ["blogs"],
+        queryFn: getBlogs,
     });
 
-    return { isLoading, error, services };
+    return { isLoading, error, blogs };
 }

@@ -1,7 +1,7 @@
 import SortBy from "../../ui/pfs/SortBy";
 import TableOperations from "../../ui/table/TableOperations";
 
-function ServiceTableOperations() {
+function BlogTableOperations() {
     return (
         <>
             <TableOperations>
@@ -16,24 +16,24 @@ function ServiceTableOperations() {
 
                 <SortBy
                     options={[
-                        { value: "name-asc", label: "Sort by name (A-Z)" },
-                        { value: "name-desc", label: "Sort by name (Z-A)" },
-                        {
-                            value: "regularPrice-asc",
-                            label: "Sort by price (low first)",
-                        },
-                        {
-                            value: "regularPrice-desc",
-                            label: "Sort by price (high first)",
-                        },
-                        {
-                            value: "maxCapacity-asc",
-                            label: "Sort by price (low first)",
-                        },
-                        {
-                            value: "maxCapacity-desc",
-                            label: "Sort by price (high first)",
-                        },
+                        { value: "title-asc", label: "Sort by name (A-Z)" },
+                        { value: "title-desc", label: "Sort by name (Z-A)" },
+                        // {
+                        //     value: "regularPrice-asc",
+                        //     label: "Sort by price (low first)",
+                        // },
+                        // {
+                        //     value: "regularPrice-desc",
+                        //     label: "Sort by price (high first)",
+                        // },
+                        // {
+                        //     value: "maxCapacity-asc",
+                        //     label: "Sort by price (low first)",
+                        // },
+                        // {
+                        //     value: "maxCapacity-desc",
+                        //     label: "Sort by price (high first)",
+                        // },
                     ]}
                 />
             </TableOperations>
@@ -41,4 +41,4 @@ function ServiceTableOperations() {
     );
 }
 
-export default ServiceTableOperations;
+export default BlogTableOperations;

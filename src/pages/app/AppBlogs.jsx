@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-// import AddBlog from "../../features/blogs/AddBlog";
-// import BlogTable from "../../features/blogs/BlogTable";
-import BlogTableOperations from "../../features/blogs/BlogTableOperations";
+// import BlogTableOperations from "../../features/blogs/BlogTableOperations";
 import Heading from "../../ui/global/Heading";
 import Row from "../../ui/global/Row";
 
@@ -11,13 +9,13 @@ function AppBlogs() {
         <>
             <Row type="horizontal">
                 <Heading as="h1">All Blogs</Heading>
-                <BlogTableOperations />
+                {/* <BlogTableOperations /> */}
             </Row>
 
             <Row>
-                {/* <BlogTable /> */}
+                {/* <BlogTable />
 
-                {/* <AddBlog /> */}
+                <AddBlog /> */}
             </Row>
         </>
     );

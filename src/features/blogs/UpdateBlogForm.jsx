@@ -2,9 +2,11 @@
 /* eslint-disable react/prop-types */
 
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+
 import { useUser } from "../authentication/useUser";
-import { useUpdateService } from "./useUpdateService";
-import { useEffect } from "react";
+import { useUpdateBlog } from "./useUpdateBlog";
+
 import Spinner from "../../ui/spinner/Spinner";
 import Form from "../../ui/form/Form";
 import FormRowVertical from "../../ui/form/FormRowVertical";
@@ -16,31 +18,14 @@ import FileInput from "../../ui/form/FileInput";
 import Or from "../../ui/form/Or";
 import FormRow from "../../ui/form/FormRow";
 import Button from "../../ui/global/Button";
-
-// import { useEffect } from "react";
-// import { useForm } from "react-hook-form";
-
-// import AboutCreated from "../../ui/about/AboutCreated";
-// import Form from "../../ui/form/Form";
-// import FormRow from "../../ui/form/FormRow";
-// import FormRowVertical from "../../ui/form/FormRowVertical";
-// import DevSrc from "../../ui/form/DevSrc";
-// import Input from "../../ui/form/Input";
-// import Textarea from "../../ui/form/Textarea";
-// import FileInput from "../../ui/form/FileInput";
-// import Button from "../../ui/global/Button";
-// import Label from "../../ui/form/Label";
-// import Spinner from "../../ui/spinner/Spinner";
-
-// import { useUpdateAboutUs } from "./useUpdateAboutUs";
-// import { useUser } from "../authentication/useUser";
-// import Or from "../../ui/form/Or";
+import AddDesLine from "../../ui/form/AddDesLine";
 
 // import { useAboutUs } from "./useAboutUs";
 
-function UpdateServiceForm({ service }) {
+function UpdateBlogForm({ blog, onCloseModal }) {
     const { user } = useUser();
     const { id: userId, email: userEmail } = user;
+    const { fullName, avatar } = user.user_metadata;
 
     const {
         id: updateId,
@@ -53,12 +38,13 @@ function UpdateServiceForm({ service }) {
         description,
         email,
         user_id,
-    } = service;
-    const { isUpdating, updateService } = useUpdateService();
+    } = blog;
+    const { ...editBlog } = blog;
+    const { isUpdating, updateBlog } = useUpdateBlog();
 
     const { register, handleSubmit, reset, getValues, formState, setValue } =
         useForm({
-            defaultValues: service,
+            defaultValues: editBlog,
         });
     const { errors } = formState;
 
@@ -67,7 +53,8 @@ function UpdateServiceForm({ service }) {
             try {
                 setValue("title", title || "");
                 setValue("summary", summary || "");
-                setValue("dataupdate", new Date().toISOString() || dataupdate);
+                // setValue("dataupdate", new Date().toISOString() || dataupdate);
+                setValue("dataupdate", dataupdate);
 
                 const descriptionData = async () => {
                     try {
@@ -124,8 +111,25 @@ function UpdateServiceForm({ service }) {
         video.url,
     ]);
 
+    const [desLine, setDesLine] = useState(
+        Object.keys(getValues().description).length,
+    );
+    const [errorDesLine, setErrorDesLine] = useState("");
+
+    function HandleAddDesLine() {
+        const numberOfLines = Object.keys(getValues().description).length;
+        if (getValues().description[`line${numberOfLines - 1}`]) {
+            setDesLine(desLine + 1);
+            const newKey = `line${numberOfLines}`;
+            const newValue = "";
+            description[newKey] = newValue;
+        } else {
+            setErrorDesLine("Please fill out these fields");
+        }
+    }
+
     function onSubmit(data) {
-        // console.log(`d===========`, data);
+        console.log(`d===========`, data);
 
         let imageSrc =
             data.image && data.image.src ? data.image.src[0] : image.src;
@@ -145,14 +149,23 @@ function UpdateServiceForm({ service }) {
             track: videoTrack,
         };
 
-        updateService(
+        // chat
+        // تحويل الوصف إلى كائن يحتوي على السطور المختلفة
+        // let description = {};
+        // for (let i = 0; i < desLine; i++) {
+        //     description[`line${i}`] = data[`description.line${i}`];
+        // }
+
+        updateBlog(
             {
-                newServiceData: {
+                newBlogData: {
                     ...data,
                     image: { ...ImageE },
                     video: { ...videoE },
                     email: userEmail,
                     user_id: userId,
+                    username: fullName,
+                    // description: description, // تمرير الوصف المحدث هنا
                 },
                 id: updateId,
             },
@@ -160,6 +173,7 @@ function UpdateServiceForm({ service }) {
                 // eslint-disable-next-line no-unused-vars
                 onSuccess: (data) => {
                     reset();
+                    onCloseModal?.();
                 },
             },
         );
@@ -177,7 +191,7 @@ function UpdateServiceForm({ service }) {
 
             <Form onSubmit={handleSubmit(onSubmit, onError)} type={"updata"}>
                 <FormRowVertical
-                    label="Service title"
+                    label="Blog title"
                     error={errors?.title?.message}
                 >
                     <Input
@@ -191,7 +205,21 @@ function UpdateServiceForm({ service }) {
                 </FormRowVertical>
 
                 <FormRowVertical
-                    label="summary for Service"
+                    label="Blog icon"
+                    error={errors?.icon?.message}
+                >
+                    <Input
+                        type="text"
+                        id="icon"
+                        disabled={isUpdating}
+                        {...register("icon", {
+                            // required: "This field is required",
+                        })}
+                    />
+                </FormRowVertical>
+
+                <FormRowVertical
+                    label="summary for Blog"
                     error={errors?.summary?.message}
                 >
                     <Textarea
@@ -205,10 +233,11 @@ function UpdateServiceForm({ service }) {
                 </FormRowVertical>
 
                 <FormRowVertical
-                    label="Description for Service"
+                    label="Description for Blog"
                     error={errors?.description?.message}
                 >
                     <>
+                        {/* {Object.keys(description).map((des) => ( */}
                         {Object.keys(description).map((des) => (
                             <Input
                                 key={des}
@@ -220,11 +249,16 @@ function UpdateServiceForm({ service }) {
                                 })}
                             />
                         ))}
+                        <AddDesLine
+                            fn={HandleAddDesLine}
+                            text="Add Input"
+                            error={errorDesLine}
+                        />
                     </>
                 </FormRowVertical>
 
                 <FormRowVertical
-                    label="Service video"
+                    label="Blog video"
                     error={errors?.video?.message}
                 >
                     <>
@@ -279,7 +313,7 @@ function UpdateServiceForm({ service }) {
                 </FormRowVertical>
 
                 <FormRowVertical
-                    label="Service photo"
+                    label="Blog photo"
                     error={errors?.image?.message}
                 >
                     <>
@@ -352,8 +386,15 @@ function UpdateServiceForm({ service }) {
                     {/* <Button variation="secondary" type="reset">
                     Cancel
                 </Button> */}
+                    <Button
+                        variation="secondary"
+                        type="reset"
+                        onClick={() => onCloseModal?.()}
+                    >
+                        Cancel
+                    </Button>
 
-                    <Button disabled={isUpdating}>Update About</Button>
+                    <Button disabled={isUpdating}>Update Blog</Button>
                 </FormRow>
             </Form>
 
@@ -362,4 +403,4 @@ function UpdateServiceForm({ service }) {
     );
 }
 
-export default UpdateServiceForm;
+export default UpdateBlogForm;

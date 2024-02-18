@@ -1,41 +1,24 @@
 /* eslint-disable no-unused-vars */
-import { FaHospital, FaProcedures, FaUserMd, FaUsers } from "react-icons/fa";
+import IconCom from "./IconCom";
+import { useIconsNumber } from "../../features/iconsnumber/useIconsNumber";
+import Spinner from "../spinner/Spinner";
+import Empty from "../error/Empty";
 
 function IconsCom() {
     // dataupdate, icon, number, title, username, emil, user_Id
+
+    const { isLoading, iconsnumber } = useIconsNumber();
+
+    if (isLoading) return <Spinner />;
+    if (!iconsnumber) return <Empty resourceName="iconsnumber" />;
+
     return (
         <>
-            <section className="icons">
+            <section className="icons" id="iconsnumber">
                 <div className="container">
-                    <div className="icon-cont">
-                        <FaUserMd />
-                        <h3>140+</h3>
-                        <p>doctors at work</p>
-                    </div>
-
-                    {/* <div className="icon-cont"> 
-                        <FaUserMd />
-                        <h3>140+</h3>
-                        <p>doctors at work</p>
-                    </div>
-
-                    <div className="icon-cont"> 
-                        <FaUsers />
-                        <h3>1040+</h3>
-                        <p>satisfied patients</p>
-                    </div>
-
-                    <div className="icon-cont"> 
-                        <FaProcedures />
-                        <h3>500+</h3>
-                        <p>bed facility</p>
-                    </div>
-
-                    <div className="icon-cont"> 
-                        <FaHospital />
-                        <h3>80+</h3>
-                        <p>available hospitals</p>
-                    </div> */}
+                    {iconsnumber.map((iconnumber) => (
+                        <IconCom iconnumber={iconnumber} key={iconnumber.id} />
+                    ))}
                 </div>
             </section>
             <div className="spikes" />
